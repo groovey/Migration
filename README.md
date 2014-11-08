@@ -1,4 +1,4 @@
 Migration
 =========
 
-A simple migration script using php
+A simple migration script using php.

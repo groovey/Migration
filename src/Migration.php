@@ -1,10 +1,9 @@
 <?php namespace Groovey\Migration;
 
-class Migration {
-
-  public function status($bool = true)
-  {
-    return $bool;
-  }
-
+class Migration
+{
+    public function status($bool = true)
+    {
+        return $bool;
+    }
 }

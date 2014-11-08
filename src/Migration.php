@@ -6,4 +6,8 @@ class Migration
     {
         return $bool;
     }
+
+    public function test() {
+    }
+
 }

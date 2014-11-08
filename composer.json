@@ -1,0 +1,22 @@
+{
+    "name": "groovey/migration",
+    "description": "A KISS migration script using configuration file.",
+    "license": "MIT",
+    "keywords": ["groovey", "framework", "simple"],
+    "authors": [
+        {
+            "name": "Harold Kim Cantil",
+            "email": "pokoot@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Groovey\\Migration\\": "src"
+        }
+    }
+
+}

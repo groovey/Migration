@@ -7,6 +7,4 @@ A simple migration script using php.
 
 Install using composer
 
-"groovey/migration" : "*"
-
-
+    "groovey/migration" : "*"

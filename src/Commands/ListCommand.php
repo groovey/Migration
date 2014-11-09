@@ -31,6 +31,7 @@ class ListCommand extends Command
         $migrations = Migration::orderBy('version')->get();
 
         $datas = [];
+
         foreach ($migrations as $migration) {
 
             $datas[] = [

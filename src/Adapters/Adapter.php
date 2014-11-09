@@ -16,4 +16,14 @@ class Adapter
         $this->database->create();
     }
 
+    public function reset()
+    {
+        $this->database->truncate();
+    }
+
+    public function drop()
+    {
+        $this->database->drop();
+    }
+
 }

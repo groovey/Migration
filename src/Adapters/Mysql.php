@@ -27,10 +27,11 @@ class Mysql implements AdapterInterface
         return DB::statement($sql);
     }
 
-    public static function reset()
+    public static function truncate()
     {
         $sql = 'TRUNCATE TABLE `migrations`';
 
         return DB::statement($sql);
     }
+
 }

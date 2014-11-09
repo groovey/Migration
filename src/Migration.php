@@ -1,13 +1,18 @@
 <?php namespace Groovey\Migration;
 
-class Migration
-{
-    public function status($bool = true)
-    {
-        return $bool;
-    }
+use Symfony\Component\Console\Application;
+use Groovey\Migration\Commands\InitCommand;
+use Groovey\Migration\Adapters\Adapter;
 
-    public function test() {
+class Migration extends Application
+{
+    public $adapter;
+
+    public function __construct(Adapter $adapter)
+    {
+        parent::__construct();
+
+        $this->add(new InitCommand($adapter));
     }
 
 }

@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/database.php';
+
+use Groovey\Migration\Migration;
+use Groovey\Migration\Adapters\Mysql;
+use Groovey\Migration\Adapters\Adapter;
+
+
+$adapter     = new Adapter(new Mysql);
+$application = new Migration($adapter);
+
+$application->run();

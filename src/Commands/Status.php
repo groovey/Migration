@@ -5,8 +5,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Groovey\Migration\Models\Migration;
 use Groovey\Migration\Adapters\Adapter;
+use Groovey\Migration\Manager;
 
-class ListCommand extends Command
+class Status extends Command
 {
     private $adapter;
 
@@ -20,35 +21,27 @@ class ListCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('migration:list')
-            ->setDescription('Listing off all the migrated script.')
+            ->setName('migration:status')
+            ->setDescription('List all the migrations file that have not been migrated.')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $migrations = Migration::orderBy('version')->get();
-
-        $datas = [];
-
-        foreach ($migrations as $migration) {
-
-            $datas[] = [
-                'id'          => $migration->id,
-                'version'     => $migration->version,
-                'description' => $migration->description,
-                'created at'  => $migration->created_at
-            ];
+        $files = [];
+        foreach (Manager::getUnIportedFiles() as $file) {
+            $files[] = [$file];
         }
 
         $table = $this->getHelper('table');
         $table
-            ->setHeaders(['id', 'Version', 'Description', 'Created At'])
-            ->setRows($datas)
+            ->setHeaders(['Unmigrated Files'])
+            ->setRows($files)
         ;
 
         $table->render($output);
 
     }
+
 }

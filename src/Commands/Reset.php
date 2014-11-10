@@ -6,7 +6,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Groovey\Migration\Models\Migration;
 use Groovey\Migration\Adapters\Adapter;
 
-class ResetCommand extends Command
+class Reset extends Command
 {
     private $adapter;
 

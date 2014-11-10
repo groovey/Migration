@@ -2,11 +2,12 @@
 
 use Symfony\Component\Console\Application;
 use Groovey\Migration\Adapters\Adapter;
-use Groovey\Migration\Commands\InitCommand;
-use Groovey\Migration\Commands\ResetCommand;
-use Groovey\Migration\Commands\ListCommand;
-use Groovey\Migration\Commands\DropCommand;
-use Groovey\Migration\Commands\CreateCommand;
+use Groovey\Migration\Commands\Init;
+use Groovey\Migration\Commands\Reset;
+use Groovey\Migration\Commands\Listing;
+use Groovey\Migration\Commands\Drop;
+use Groovey\Migration\Commands\Create;
+use Groovey\Migration\Commands\Status;
 
 class Migration extends Application
 {
@@ -16,11 +17,12 @@ class Migration extends Application
     {
         parent::__construct();
 
-        $this->add(new InitCommand($adapter));
-        $this->add(new ResetCommand($adapter));
-        $this->add(new ListCommand($adapter));
-        $this->add(new DropCommand($adapter));
-        $this->add(new CreateCommand($adapter));
+        $this->add(new Init($adapter));
+        $this->add(new Reset($adapter));
+        $this->add(new Listing($adapter));
+        $this->add(new Drop($adapter));
+        $this->add(new Create($adapter));
+        $this->add(new Status($adapter));
     }
 
 }

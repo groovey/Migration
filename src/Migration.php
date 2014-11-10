@@ -6,6 +6,7 @@ use Groovey\Migration\Commands\InitCommand;
 use Groovey\Migration\Commands\ResetCommand;
 use Groovey\Migration\Commands\ListCommand;
 use Groovey\Migration\Commands\DropCommand;
+use Groovey\Migration\Commands\CreateCommand;
 
 class Migration extends Application
 {
@@ -19,6 +20,7 @@ class Migration extends Application
         $this->add(new ResetCommand($adapter));
         $this->add(new ListCommand($adapter));
         $this->add(new DropCommand($adapter));
+        $this->add(new CreateCommand($adapter));
     }
 
 }

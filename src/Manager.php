@@ -5,22 +5,17 @@ use Groovey\Migration\Models\Migration as Migrations;
 
 class Manager
 {
-    public $adapter;
-
-    public function __construct(Adapter $adapter)
-    {
-    }
 
     public static function getTemplate()
     {
 
 $yaml = <<<YML
 # Run the migration
-UP:
+UP: >
 
 
 # Reverse the migration
-DOWN:
+DOWN: >
 
 
 YML;
@@ -62,7 +57,7 @@ YML;
         return $version . '_' . $argument . '.yml';
     }
 
-    public static function getAllImported()
+    public static function getAllMigratedRecords()
     {
         return Migrations::orderBy('version')->get();
     }
@@ -74,12 +69,12 @@ YML;
         return $finder->files()->in(self::getDirectory());
     }
 
-    public static function getUnIportedFiles()
+    public static function getUnMigratedFiles()
     {
 
         $records = function () {
             $version = [];
-            foreach (Manager::getAllImported() as $file ) {
+            foreach (Manager::getAllMigratedRecords() as $file ) {
                 $version[] = $file->version;
             }
 
@@ -97,6 +92,19 @@ YML;
         }
 
         return (array) $files;
+    }
+
+    public static function getFileInfo($file)
+    {
+
+        list($version) = explode('_', $file);
+
+        $description = str_replace('_', ' ', substr($file, 4, -4));
+
+        return [
+            'version'     => $version,
+            'description' => $description
+        ];
     }
 
 }

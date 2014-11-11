@@ -29,7 +29,7 @@ class Listing extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $migrations = Manager::getAllImported();
+        $migrations = Manager::getAllMigratedRecords();
 
         $datas = [];
 

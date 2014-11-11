@@ -30,7 +30,7 @@ class Status extends Command
     {
 
         $files = [];
-        foreach (Manager::getUnIportedFiles() as $file) {
+        foreach (Manager::getUnMigratedFiles() as $file) {
             $files[] = [$file];
         }
 
@@ -41,7 +41,6 @@ class Status extends Command
         ;
 
         $table->render($output);
-
     }
 
 }

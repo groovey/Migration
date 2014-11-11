@@ -53,6 +53,9 @@ class Create extends Command
         $data      = Manager::getTemplate();
 
         file_put_contents($directory . '/' . $filename, $data);
+
+        $text = '<info>Sucessfully created migration file.</info>';
+        $output->writeln($text);
     }
 
 }

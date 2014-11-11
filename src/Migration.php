@@ -7,7 +7,7 @@ use Groovey\Migration\Commands\Reset;
 use Groovey\Migration\Commands\Listing;
 use Groovey\Migration\Commands\Drop;
 use Groovey\Migration\Commands\Create;
-use Groovey\Migration\Commands\Status;
+use Groovey\Migration\Commands\Up;
 
 class Migration extends Application
 {
@@ -22,7 +22,7 @@ class Migration extends Application
         $this->add(new Listing($adapter));
         $this->add(new Drop($adapter));
         $this->add(new Create($adapter));
-        $this->add(new Status($adapter));
+        $this->add(new Up($adapter));
     }
 
 }

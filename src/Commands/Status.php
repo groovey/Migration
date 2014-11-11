@@ -36,7 +36,7 @@ class Status extends Command
 
         $table = $this->getHelper('table');
         $table
-            ->setHeaders(['Unmigrated Files'])
+            ->setHeaders(['Unmigrated SQL'])
             ->setRows($files)
         ;
 

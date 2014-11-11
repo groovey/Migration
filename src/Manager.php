@@ -57,9 +57,9 @@ YML;
         return $version . '_' . $argument . '.yml';
     }
 
-    public static function getAllMigratedRecords()
+    public static function getAllMigratedRecords($order = 'ASC')
     {
-        return Migrations::orderBy('version')->get();
+        return Migrations::orderBy('version', $order)->get();
     }
 
     public static function getAllFiles()

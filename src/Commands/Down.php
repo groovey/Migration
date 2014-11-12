@@ -47,6 +47,7 @@ class Down extends Command
 
             if (!$record) {
                 $output->writeln('Unable to find version.');
+
                 return;
             }
 

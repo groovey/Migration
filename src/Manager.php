@@ -6,6 +6,10 @@ use Groovey\Migration\Models\Migration as Migrations;
 class Manager
 {
 
+    public function __construct()
+    {
+    }
+
     public static function getTemplate()
     {
 
@@ -57,11 +61,6 @@ YML;
         return $version . '_' . $argument . '.yml';
     }
 
-    public static function getAllMigratedRecords($order = 'ASC')
-    {
-        return Migrations::orderBy('version', $order)->get();
-    }
-
     public static function getAllFiles()
     {
         $finder = new Finder();
@@ -74,7 +73,8 @@ YML;
 
         $records = function () {
             $version = [];
-            foreach (Manager::getAllMigratedRecords() as $file ) {
+            $migrations = Migrations::orderBy('version')->get();
+            foreach ($migrations as $file) {
                 $version[] = $file->version;
             }
 
@@ -82,7 +82,7 @@ YML;
         };
 
         $files = [];
-        foreach (Manager::getAllFiles() as $file) {
+        foreach (self::getAllFiles() as $file) {
             $filename = $file->getRelativePathname();
             list($version, $description) = explode('_', $filename);
 

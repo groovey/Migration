@@ -3,7 +3,6 @@
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Groovey\Migration\Manager;
 use Groovey\Migration\Models\Migration;
 use Groovey\Migration\Adapters\Adapter;
 
@@ -29,7 +28,7 @@ class Listing extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $migrations = Manager::getAllMigratedRecords();
+        $migrations = Migration::orderBy('version')->get();
 
         $datas = [];
 

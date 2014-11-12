@@ -14,6 +14,8 @@ class Manager
     {
 
 $yaml = <<<YML
+# Author: Name <your@email.com>
+
 # Run the migration
 UP: >
 
@@ -58,7 +60,7 @@ YML;
     {
         $version = self::getGeneratedVersion();
 
-        return $version . '_' . $argument . '.yml';
+        return $version . '_' . strtolower($argument) . '.yml';
     }
 
     public static function getAllFiles()

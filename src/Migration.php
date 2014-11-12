@@ -10,6 +10,7 @@ use Groovey\Migration\Commands\Create;
 use Groovey\Migration\Commands\Status;
 use Groovey\Migration\Commands\Up;
 use Groovey\Migration\Commands\Down;
+use Groovey\Migration\Commands\About;
 
 class Migration extends Application
 {
@@ -27,6 +28,7 @@ class Migration extends Application
         $this->add(new Create($adapter));
         $this->add(new Up($adapter));
         $this->add(new Down($adapter));
+        $this->add(new About($adapter));
     }
 
 }

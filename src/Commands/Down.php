@@ -37,11 +37,8 @@ class Down extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $dir = Manager::getDirectory();
-        $yaml = new Parser();
-
-        // Get the record information based on the parameter being passed
-
+        $dir   = Manager::getDirectory();
+        $yaml  = new Parser();
         $param = $input->getArgument('param');
 
         if ($param) {
@@ -50,7 +47,6 @@ class Down extends Command
 
             if (!$record) {
                 $output->writeln('Unable to find version.');
-
                 return;
             }
 
@@ -61,8 +57,6 @@ class Down extends Command
         } else {
             $records = Migration::orderBy('version', 'DESC')->take(1)->get();
         }
-
-        // Iterate the records
 
         foreach ($records as $record) {
 
@@ -76,8 +70,8 @@ class Down extends Command
 
             $value = $yaml->parse(file_get_contents($dir . '/' . $file));
 
-            $down = explode(';', trim($value['DOWN']));
-            $down = array_filter($down);
+            $down  = explode(';', trim($value['DOWN']));
+            $down  = array_filter($down);
 
             foreach ($down as $query) {
                 DB::statement(trim($query));
@@ -86,7 +80,5 @@ class Down extends Command
             $data = Migration::find($id);
             $data->delete();
         }
-
     }
-
 }

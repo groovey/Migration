@@ -4,7 +4,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Groovey\Migration\Manager;
 use Groovey\Migration\Models\Migration;
 use Groovey\Migration\Adapters\Adapter;
@@ -18,7 +17,6 @@ class Create extends Command
         parent::__construct();
 
         $this->adapter = $adapter;
-
     }
 
     protected function configure()

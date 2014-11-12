@@ -50,6 +50,5 @@ class Listing extends Command
         ;
 
         $table->render($output);
-
     }
 }

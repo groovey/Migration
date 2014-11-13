@@ -12,9 +12,12 @@ class Manager
 
     public static function getTemplate()
     {
+       $now = new \DateTime();
+       $date = $now->format('Y-m-d H:i:s');
 
 $yaml = <<<YML
 # Author: Name <your@email.com>
+# Date: $date
 
 # Run the migration
 UP: >

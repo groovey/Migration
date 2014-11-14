@@ -193,6 +193,8 @@ Sample output:
 
 Truncates all migrated records.
 
+    $ groovey migration:reset
+
 Sample output:
 
     All datas will be truncated, are you sure you want to proceed? (Y/N): Y
@@ -201,6 +203,8 @@ Sample output:
 ## Drop
 
 Drops the `migrations` table.
+
+    $ groovey migration:drop
 
 Sample output:
 
@@ -211,6 +215,8 @@ Sample output:
 ## About
 
 Shows the library information details.
+
+    $ groovey migration:about
 
 ## Like us.
 

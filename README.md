@@ -14,7 +14,7 @@ Install using composer. To learn more about composer, visit: https://getcomposer
 ```json
 {
     "require": {
-        "groovey/migration": "~1.0"
+        "groovey/migration": "~1.2"
     }
 }
 ```

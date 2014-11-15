@@ -28,17 +28,34 @@ On your project root folder. Create a file called `groovey`. Or this could be an
 ```php
 #!/usr/bin/env php
 <?php
+
+set_time_limit(0);
+
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/database.php';
 
-use Groovey\Migration\Migration;
-use Groovey\Migration\Adapters\Mysql;
+use Symfony\Component\Console\Application;
 use Groovey\Migration\Adapters\Adapter;
+use Groovey\Migration\Adapters\Mysql;
+use Groovey\Migration\Commands;
 
-$adapter     = new Adapter(new Mysql);
-$application = new Migration($adapter);
+$adapter = new Adapter(new Mysql);
+$app     = new Application;
 
-$application->run()
+$app->addCommands([
+    new Commands\Init($adapter),
+    new Commands\Reset($adapter),
+    new Commands\Listing($adapter),
+    new Commands\Drop($adapter),
+    new Commands\Status($adapter),
+    new Commands\Create($adapter),
+    new Commands\Up($adapter),
+    new Commands\Down($adapter),
+    new Commands\Up($adapter),
+    new Commands\About()
+]);
+
+$app->run();
 ```
 
 ### The Database Bootstrap File

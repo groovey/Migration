@@ -9,22 +9,15 @@ require_once __DIR__ . '/database.php';
 use Symfony\Component\Console\Application;
 use Groovey\Migration\Adapters\Adapter;
 use Groovey\Migration\Adapters\Mysql;
+use Groovey\Migration\Migration;
 use Groovey\Migration\Commands;
 
-$adapter = new Adapter(new Mysql);
-$app     = new Application;
+$adapter   = new Adapter(new Mysql);
+$migration = new Migration($adapter);
+$app       = new Application;
 
-$app->addCommands([
-    new Commands\Init($adapter),
-    new Commands\Reset($adapter),
-    new Commands\Listing($adapter),
-    new Commands\Drop($adapter),
-    new Commands\Status($adapter),
-    new Commands\Create($adapter),
-    new Commands\Up($adapter),
-    new Commands\Down($adapter),
-    new Commands\Up($adapter),
-    new Commands\About()
-]);
+$app->addCommands(
+        $migration->getCommands()
+    );
 
 $app->run();

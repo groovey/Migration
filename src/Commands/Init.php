@@ -33,7 +33,7 @@ class Init extends Command
         $folder = getcwd() . '/database/migrations';
 
         if (false === @mkdir($folder, 0755, true) && !file_exists($folder)) {
-            $output->writeln("<info>Unable to create folder. Create file permissions.</info>");
+            $output->writeln("<info>Unable to create folder. Check file permissions.</info>");
 
             return;
         }

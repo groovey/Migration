@@ -19,7 +19,7 @@ class About extends Command
     protected function configure()
     {
         $this
-            ->setName('migration:about')
+            ->setName('migrate:about')
             ->setDescription('Shows credits to the author.')
         ;
     }

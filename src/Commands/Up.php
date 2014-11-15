@@ -23,7 +23,7 @@ class Up extends Command
     protected function configure()
     {
         $this
-            ->setName('migration:up')
+            ->setName('migrate:up')
             ->setDescription('Run the migration.')
         ;
     }

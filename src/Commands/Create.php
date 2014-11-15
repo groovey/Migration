@@ -22,7 +22,7 @@ class Create extends Command
     protected function configure()
     {
         $this
-            ->setName('migration:create')
+            ->setName('migrate:create')
             ->setDescription('Creates a .yml migration file under database/migrations.')
             ->addArgument(
                 'param',

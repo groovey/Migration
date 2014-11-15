@@ -5,7 +5,7 @@ A simple migration script tool that uses yaml file for native sql script. What i
 
 ## Usage
 
-    $ groovey migration:up
+    $ groovey migrate:up
 
 ## Installation
 
@@ -86,13 +86,13 @@ Good job! Your ready to discover the painless way of doing migrations.
 
 This command creates a table called `migrations`. Then creates a folder `./database/migrations` under your project root.
 
-    $ groovey migration:init
+    $ groovey migrate:init
 
 ## Create
 
 This command will automatically create the yaml file.
 
-    $ groovey migration:create Create A Test Table
+    $ groovey migrate:create Create A Test Table
 
 The command will generate the formatted file like `001_create_a_test_table.yml`.
 
@@ -133,7 +133,7 @@ DOWN: >
 
 Running this command will check all the unmigrated yaml files.
 
-    $ groovey migration:status
+    $ groovey migrate:status
 
 Sample output:
 
@@ -149,7 +149,7 @@ Sample output:
 
 Runs the migration `UP` script.
 
-    $ groovey migration:up
+    $ groovey migrate:up
 
 
 Sample output:
@@ -160,7 +160,7 @@ Sample output:
 
 Shows all the migrated yml scripts.
 
-    $ groovey migration:list
+    $ groovey migrate:list
 
 
 Sample output:
@@ -178,11 +178,11 @@ Sample output:
 
 Reverse the last migration.
 
-    $ groovey migration:down
+    $ groovey migrate:down
 
 Reverse a specific migration version.
 
-    $ groovey migration:down 001
+    $ groovey migrate:down 001
 
 Sample output:
 
@@ -193,7 +193,7 @@ Sample output:
 
 Truncates all migrated records.
 
-    $ groovey migration:reset
+    $ groovey migrate:reset
 
 Sample output:
 
@@ -204,7 +204,7 @@ Sample output:
 
 Drops the `migrations` table.
 
-    $ groovey migration:drop
+    $ groovey migrate:drop
 
 Sample output:
 
@@ -216,7 +216,7 @@ Sample output:
 
 Shows the library information details.
 
-    $ groovey migration:about
+    $ groovey migrate:about
 
 ## Like us.
 

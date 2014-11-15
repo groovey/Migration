@@ -24,7 +24,7 @@ class Down extends Command
     protected function configure()
     {
         $this
-            ->setName('migration:down')
+            ->setName('migrate:down')
             ->setDescription('Reverese the migration.')
             ->addArgument(
                 'param',

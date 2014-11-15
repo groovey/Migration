@@ -20,7 +20,7 @@ class Listing extends Command
     protected function configure()
     {
         $this
-            ->setName('migration:list')
+            ->setName('migrate:list')
             ->setDescription('Listing off all the migrated script.')
         ;
     }

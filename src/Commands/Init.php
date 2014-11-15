@@ -20,7 +20,7 @@ class Init extends Command
     protected function configure()
     {
         $this
-            ->setName('migration:init')
+            ->setName('migrate:init')
             ->setDescription('Setup your directory and creates a migration database table.')
         ;
     }

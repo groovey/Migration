@@ -21,7 +21,7 @@ class Drop extends Command
     protected function configure()
     {
         $this
-            ->setName('migration:drop')
+            ->setName('migrate:drop')
             ->setDescription('[Caution] Drops the migration table.')
         ;
     }

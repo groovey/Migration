@@ -21,7 +21,7 @@ class Reset extends Command
     protected function configure()
     {
         $this
-            ->setName('migration:reset')
+            ->setName('migrate:reset')
             ->setDescription('Truncates all data.')
         ;
     }

@@ -21,7 +21,7 @@ class Status extends Command
     protected function configure()
     {
         $this
-            ->setName('migration:status')
+            ->setName('migrate:status')
             ->setDescription('List all the migrations file that have not been migrated.')
         ;
     }

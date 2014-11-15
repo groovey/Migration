@@ -3,17 +3,12 @@
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Groovey\Migration\Adapters\Adapter;
 
 class About extends Command
 {
-    private $adapter;
-
-    public function __construct(Adapter $adapter)
+    public function __construct()
     {
         parent::__construct();
-
-        $this->adapter = $adapter;
     }
 
     protected function configure()

@@ -35,7 +35,7 @@ $about = <<<ABOUT
     Git: https://github.com/groovey/migration
     Author: Harold Kim Cantil <pokoot@gmail.com>
 
-    Show us your support by liking the project.
+    Crafted with love.
 
 ABOUT;
 

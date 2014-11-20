@@ -23,11 +23,11 @@ class Create extends Command
     {
         $this
             ->setName('migrate:create')
-            ->setDescription('Creates a .yml migration file under database/migrations.')
+            ->setDescription('Creates a .yml migration file.')
             ->addArgument(
                 'param',
                 InputArgument::IS_ARRAY | InputArgument::REQUIRED,
-                'The database task description.'
+                'The migration task description.'
             )
         ;
     }

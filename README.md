@@ -1,6 +1,6 @@
 # Groovey Migration
 
-A simple migration script tool that uses yaml file for native sql script. What it means is that there no more need for you to learn a new migration database language. Use **`native sql language`** code at your comfort.
+A simple migration script tool that uses yaml file for native sql script. What it means is that there no more need for you to learn a new migration database language. Use `native sql language` code at your comfort.
 
 
 ## Usage
@@ -23,7 +23,7 @@ Then run `composer.phar update`.
 
 ### The Groovey File
 
-On your project root folder. Create a file called `groovey`. Or this could be any project name like `awesome`. Then cut copy paste the code below.
+On your project root folder. Create a file called `groovey`. Or this could be any project name like `awesome`. Then copy the code below.
 
 ```php
 #!/usr/bin/env php
@@ -48,7 +48,9 @@ $app->addCommands(
         $migration->getCommands()
     );
 
-$app->run();
+$status = $app->run();
+
+exit($status);
 ```
 
 ### The Database Bootstrap File
@@ -57,6 +59,7 @@ Change the default parameters of the database to your environment settings.
 
 ```php
 <?php
+
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 $capsule = new Capsule;
@@ -78,7 +81,7 @@ $capsule->setAsGlobal();
 return $capsule;
 ```
 
-Good job! Your ready to discover the painless way of doing migrations.
+Good job! Your now ready to discover the painless way of doing migrations.
 
 ## List of Commands
 
@@ -94,13 +97,13 @@ Good job! Your ready to discover the painless way of doing migrations.
 
 ## Init
 
-This command creates a table called `migrations`. Then creates a folder `./database/migrations` under your project root.
+Setup your migration directory relative to your root folder `./database/migrations`.
 
     $ groovey migrate:init
 
 ## Create
 
-This command will automatically create the yaml file.
+Automatically create the yaml file.
 
     $ groovey migrate:create Create A Test Table
 
@@ -108,13 +111,13 @@ The command will generate the formatted file like `001_create_a_test_table.yml`.
 
 ## The YML file
 
-This is where you store all your sql scripts.
+This is where you store all your SQL scripts.
 
-`NOTES: Tabs needs to be converted to spaces. This is the rule for YML files.`
+`NOTE: Tabs needs to be converted to spaces. This is the rule for YML files.`
 
 For more information about YML files please visit: http://www.yaml.org/start.html
 
-`NOTES: All sql script has to end with a semicolon (;)`
+`NOTE: All sql statement has to end with a semicolon (;)`
 
 Sample .yml file:
 

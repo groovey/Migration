@@ -33,13 +33,13 @@ class Init extends Command
         $folder = getcwd() . '/database/migrations';
 
         if (false === @mkdir($folder, 0755, true) && !file_exists($folder)) {
-            $output->writeln("<info>Unable to create folder. Check file permissions.</info>");
+            $output->writeln("<error>Unable to create folder. Check file permissions.</error>");
 
             return;
         }
 
         if (file_exists($folder) && is_dir($folder)) {
-            $output->writeln("<error>Place all your migration files in ($folder)</error>");
+            $output->writeln("<comment>Place all your migration files in ($folder).</comment>");
         }
 
         $text = '<info>Sucessfully created migrations database.</info>';

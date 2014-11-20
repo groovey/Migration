@@ -38,7 +38,7 @@ class Up extends Command
         $files = [];
         foreach (Manager::getUnMigratedFiles() as $file) {
 
-            $output->writeln("Running migration file ($file).");
+            $output->writeln("<info>Running migration file ($file).</info>");
 
             $value = $yaml->parse(file_get_contents($dir . '/' . $file));
 

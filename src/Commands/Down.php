@@ -46,7 +46,7 @@ class Down extends Command
             $record = Migration::where('version', '=', $param)->first();
 
             if (!$record) {
-                $output->writeln('Unable to find version.');
+                $output->writeln('<error>Unable to find migration version.</error>');
 
                 return;
             }
@@ -67,7 +67,7 @@ class Down extends Command
 
             $file = $version . '_' . str_replace(' ', '_', $description) . '.yml';
 
-            $output->writeln("Downgrading migration file ($file).");
+            $output->writeln("<info>Downgrading migration file ($file).</info>");
 
             $value = $yaml->parse(file_get_contents($dir . '/' . $file));
 

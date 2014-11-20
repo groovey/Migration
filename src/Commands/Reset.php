@@ -22,7 +22,7 @@ class Reset extends Command
     {
         $this
             ->setName('migrate:reset')
-            ->setDescription('Truncates all data.')
+            ->setDescription('Truncates all migrations data.')
         ;
     }
 
@@ -30,7 +30,10 @@ class Reset extends Command
     {
 
         $helper = $this->getHelper('question');
-        $question = new ConfirmationQuestion('All datas will be truncated, are you sure you want to proceed? (Y/N): ', false);
+
+        $question = new ConfirmationQuestion(
+            '<question>All datas will be truncated, are you sure you want to proceed? (Y/N):</question> ',
+            false);
 
         if (!$helper->ask($input, $output, $question)) {
             return;

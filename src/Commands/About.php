@@ -23,19 +23,20 @@ class About extends Command
     {
 
 $about = <<<ABOUT
+ <comment>
+    ______
+   / ____/________  ____ _   _____  __  __
+  / / __/ ___/ __ \/ __ \ | / / _ \/ / / /
+ / /_/ / /  / /_/ / /_/ / |/ /  __/ /_/ /
+ \____/_/   \____/\____/|___/\___/\__, /
+                                 /____/
+ </comment>
 
-       ______
-      / ____/________  ____ _   _____  __  __
-     / / __/ ___/ __ \/ __ \ | / / _ \/ / / /
-    / /_/ / /  / /_/ / /_/ / |/ /  __/ /_/ /
-    \____/_/   \____/\____/|___/\___/\__, /
-                                    /____/
+ Project Name: Groovey Migration
+ Git: https://github.com/groovey/migration
+ Author: Harold Kim Cantil <pokoot@gmail.com>
 
-    Project Name: Groovey Migration
-    Git: https://github.com/groovey/migration
-    Author: Harold Kim Cantil <pokoot@gmail.com>
-
-    Crafted with love.
+ Crafted with love.
 
 ABOUT;
 

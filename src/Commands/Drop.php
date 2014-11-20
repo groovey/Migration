@@ -30,7 +30,10 @@ class Drop extends Command
     {
 
         $helper = $this->getHelper('question');
-        $question = new ConfirmationQuestion('Migration table will be drop, are you sure you want to proceed? (Y/N): ', false);
+
+        $question = new ConfirmationQuestion(
+            '<question>Migration table will be drop, are you sure you want to proceed? (Y/N):</question> ',
+            false);
 
         if (!$helper->ask($input, $output, $question)) {
             return;
@@ -38,7 +41,7 @@ class Drop extends Command
 
         $this->adapter->drop();
 
-        $text = '<error>Migrations table gone.</error>';
+        $text = '<info>Migrations table gone.</info>';
 
         $output->writeln($text);
     }

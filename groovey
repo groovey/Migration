@@ -19,4 +19,6 @@ $app->addCommands(
         $migration->getCommands()
 	);
 
-$app->run();
+$status = $app->run();
+
+exit($status);

@@ -7,7 +7,7 @@ A simple migration script tool that uses yaml file for native sql script. What i
 
     $ groovey migrate:up
 
-## Installation
+## Step 1 - Installation
 
 Install using composer. To learn more about composer, visit: https://getcomposer.org/
 
@@ -21,9 +21,9 @@ Install using composer. To learn more about composer, visit: https://getcomposer
 
 Then run `composer.phar update`.
 
-### The Groovey File
+## Step 2 - The Groovey File
 
-On your project root folder. Create a file called `groovey`. Or this could be any project name like `awesome`. Then copy the code below.
+On your project root folder. Create a file called `groovey`.
 
 ```php
 #!/usr/bin/env php
@@ -53,7 +53,7 @@ $status = $app->run();
 exit($status);
 ```
 
-### The Database Bootstrap File
+## Step 3 - The Database Bootstrap File
 
 Change the default parameters of the database to your environment settings.
 
@@ -95,7 +95,7 @@ Good job! Your now ready to discover the painless way of doing migrations.
 - [Drop](#drop)
 - [About](#about)
 
-## Init
+## Step 4 - Init
 
 Setup your migration directory relative to your root folder `./database/migrations`.
 

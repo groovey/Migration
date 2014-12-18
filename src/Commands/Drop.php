@@ -32,7 +32,7 @@ class Drop extends Command
         $helper = $this->getHelper('question');
 
         $question = new ConfirmationQuestion(
-            '<question>Migration table will be drop, are you sure you want to proceed? (Y/N):</question> ',
+            '<question>Migration table will be drop, are you sure you want to proceed? (y/N):</question> ',
             false);
 
         if (!$helper->ask($input, $output, $question)) {

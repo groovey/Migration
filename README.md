@@ -67,9 +67,9 @@ $capsule = new Capsule;
 $capsule->addConnection([
     'driver'    => 'mysql',
     'host'      => 'localhost',
-    'database'  => 'groovey',
+    'database'  => 'migration',
     'username'  => 'root',
-    'password'  => 'awesome',
+    'password'  => 'webdevel',
     'charset'   => 'utf8',
     'collation' => 'utf8_general_ci',
     'prefix'    => ''
@@ -101,7 +101,7 @@ Setup your migration directory relative to your root folder `./database/migratio
 
     $ groovey migrate:init
 
-## Create
+## Step 5 - Create
 
 Automatically create the yaml file.
 
@@ -142,7 +142,7 @@ DOWN: >
     DROP TABLE test;
 ```
 
-## Status
+## Step 6 - Step Status
 
 Running this command will check all the unmigrated yaml files.
 
@@ -158,7 +158,7 @@ Sample output:
 +-----------------------------+
 ```
 
-## Up
+## Step 7 - Up
 
 Runs the migration `UP` script.
 
@@ -169,7 +169,7 @@ Sample output:
 
     Running migration file (001_create_a_test_table.yml).
 
-## List
+## Step 8 - List
 
 Shows all the migrated yml scripts.
 
@@ -187,7 +187,7 @@ Sample output:
 ```
 
 
-## Down
+## Step 9 - Down
 
 Reverse the last migration.
 
@@ -202,7 +202,7 @@ Sample output:
     Downgrading migration file (001_create_a_test_table.yml).
 
 
-## Reset
+## Step 10 - Reset
 
 Truncates all migrated records.
 
@@ -213,7 +213,7 @@ Sample output:
     All datas will be truncated, are you sure you want to proceed? (Y/N): Y
     All datas has been cleared.
 
-## Drop
+## Step 11 - Drop
 
 Drops the `migrations` table.
 

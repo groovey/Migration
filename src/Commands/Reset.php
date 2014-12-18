@@ -32,7 +32,7 @@ class Reset extends Command
         $helper = $this->getHelper('question');
 
         $question = new ConfirmationQuestion(
-            '<question>All datas will be truncated, are you sure you want to proceed? (Y/N):</question> ',
+            '<question>All datas will be truncated, are you sure you want to proceed? (y/N):</question> ',
             false);
 
         if (!$helper->ask($input, $output, $question)) {

@@ -1,9 +1,11 @@
-<?php namespace Groovey\Migration\Commands;
+<?php
+
+namespace Groovey\Migration\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Groovey\Migration\Models\Migration;
+use Symfony\Component\Console\Helper\Table;
 use Groovey\Migration\Adapters\Adapter;
 use Groovey\Migration\Manager;
 
@@ -28,19 +30,16 @@ class Status extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $files = [];
         foreach (Manager::getUnMigratedFiles() as $file) {
             $files[] = [$file];
         }
 
-        $table = $this->getHelper('table');
+        $table = new Table($output);
         $table
             ->setHeaders(['Unmigrated SQL'])
             ->setRows($files)
         ;
-
-        $table->render($output);
+        $table->render();
     }
-
 }

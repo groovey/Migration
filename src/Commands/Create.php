@@ -1,4 +1,6 @@
-<?php namespace Groovey\Migration\Commands;
+<?php
+
+namespace Groovey\Migration\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -45,15 +47,13 @@ class Create extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $directory = Manager::getDirectory();
         $filename  = Manager::getGeneratedFilename($this->getArguments($input));
         $data      = Manager::getTemplate();
 
-        file_put_contents($directory . '/' . $filename, $data);
+        file_put_contents($directory.'/'.$filename, $data);
 
         $text = '<info>Sucessfully created migration file.</info>';
         $output->writeln($text);
     }
-
 }

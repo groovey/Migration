@@ -1,21 +1,22 @@
-<?php namespace Groovey\Migration;
+<?php
+
+namespace Groovey\Migration;
 
 use Symfony\Component\Finder\Finder;
 use Groovey\Migration\Models\Migration as Migrations;
 
 class Manager
 {
-
     public function __construct()
     {
     }
 
     public static function getTemplate()
     {
-       $now = new \DateTime();
-       $date = $now->format('Y-m-d H:i:s');
+        $now = new \DateTime();
+        $date = $now->format('Y-m-d H:i:s');
 
-$yaml = <<<YML
+        $yaml = <<<YML
 # Author: Name <your@email.com>
 # Date: $date
 
@@ -39,14 +40,12 @@ YML;
 
     public static function getGeneratedVersion()
     {
-
         $finder = new Finder();
         $finder->files()->in(self::getDirectory());
 
         $versions = ['000'];
 
         foreach ($finder as $file) {
-
             $filename = $file->getRelativePathname();
 
             list($version, $description) = explode('_', $filename);
@@ -56,14 +55,14 @@ YML;
         $last = end($versions);
         $new  = (int) $last + 1;
 
-        return str_pad($new, 3, "0", STR_PAD_LEFT);
+        return str_pad($new, 3, '0', STR_PAD_LEFT);
     }
 
     public static function getGeneratedFilename($argument)
     {
         $version = self::getGeneratedVersion();
 
-        return $version . '_' . strtolower($argument) . '.yml';
+        return $version.'_'.strtolower($argument).'.yml';
     }
 
     public static function getAllFiles()
@@ -75,7 +74,6 @@ YML;
 
     public static function getUnMigratedFiles()
     {
-
         $records = function () {
             $version = [];
             $migrations = Migrations::orderBy('version')->get();
@@ -101,14 +99,13 @@ YML;
 
     public static function getFileInfo($file)
     {
-
         list($version) = explode('_', $file);
 
         $description = str_replace('_', ' ', substr($file, 4, -4));
 
         return [
             'version'     => $version,
-            'description' => $description
+            'description' => $description,
         ];
     }
 }

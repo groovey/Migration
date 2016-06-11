@@ -1,4 +1,6 @@
-<?php namespace Groovey\Migration;
+<?php
+
+namespace Groovey\Migration;
 
 use Groovey\Migration\Adapters\Adapter;
 
@@ -13,7 +15,6 @@ class Migration
 
     public function getCommands()
     {
-
         $adapter = $this->adapter;
 
         return [
@@ -26,8 +27,7 @@ class Migration
             new Commands\Up($adapter),
             new Commands\Down($adapter),
             new Commands\Up($adapter),
-            new Commands\About()
+            new Commands\About(),
         ];
     }
-
 }

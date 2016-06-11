@@ -8,10 +8,9 @@ class MigrationTest extends PHPUnit_Framework_TestCase
 {
     public function testSatus()
     {
-        $adapter     = new Adapter(new Mysql);
+        $adapter     = new Adapter(new Mysql());
         $application = new Migration($adapter);
 
         $this->assertTrue(true);
     }
-
 }

@@ -1,4 +1,6 @@
-<?php namespace Groovey\Migration\Commands;
+<?php
+
+namespace Groovey\Migration\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -30,17 +32,15 @@ class Up extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $yaml = new Parser();
 
         $dir = Manager::getDirectory();
 
         $files = [];
         foreach (Manager::getUnMigratedFiles() as $file) {
-
             $output->writeln("<info>Running migration file ($file).</info>");
 
-            $value = $yaml->parse(file_get_contents($dir . '/' . $file));
+            $value = $yaml->parse(file_get_contents($dir.'/'.$file));
 
             $up = explode(';', trim($value['UP']));
             $up = array_filter($up);
@@ -59,7 +59,5 @@ class Up extends Command
 
             $files[] = [$file];
         }
-
     }
-
 }

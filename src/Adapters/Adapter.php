@@ -1,4 +1,6 @@
-<?php namespace Groovey\Migration\Adapters;
+<?php
+
+namespace Groovey\Migration\Adapters;
 
 class Adapter
 {
@@ -23,5 +25,4 @@ class Adapter
     {
         $this->database->drop();
     }
-
 }

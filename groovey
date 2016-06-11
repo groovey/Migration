@@ -3,21 +3,21 @@
 
 set_time_limit(0);
 
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/database.php';
+require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/database.php';
 
 use Symfony\Component\Console\Application;
 use Groovey\Migration\Adapters\Adapter;
 use Groovey\Migration\Adapters\Mysql;
 use Groovey\Migration\Migration;
 
-$adapter   = new Adapter(new Mysql);
+$adapter   = new Adapter(new Mysql());
 $migration = new Migration($adapter);
-$app       = new Application;
+$app       = new Application();
 
 $app->addCommands(
         $migration->getCommands()
-	);
+    );
 
 $status = $app->run();
 

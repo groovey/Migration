@@ -1,4 +1,6 @@
-<?php namespace Groovey\Migration\Commands;
+<?php
+
+namespace Groovey\Migration\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,13 +29,12 @@ class Init extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $this->adapter->init();
 
-        $folder = getcwd() . '/database/migrations';
+        $folder = getcwd().'/database/migrations';
 
         if (false === @mkdir($folder, 0755, true) && !file_exists($folder)) {
-            $output->writeln("<error>Unable to create folder. Check file permissions.</error>");
+            $output->writeln('<error>Unable to create folder. Check file permissions.</error>');
 
             return;
         }

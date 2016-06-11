@@ -1,4 +1,6 @@
-<?php namespace Groovey\Migration\Commands;
+<?php
+
+namespace Groovey\Migration\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -28,7 +30,6 @@ class Drop extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $helper = $this->getHelper('question');
 
         $question = new ConfirmationQuestion(
@@ -41,7 +42,7 @@ class Drop extends Command
 
         $this->adapter->drop();
 
-        $text = '<info>Migrations table gone.</info>';
+        $text = '<info>Migrations table is now gone.</info>';
 
         $output->writeln($text);
     }

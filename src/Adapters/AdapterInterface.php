@@ -1,4 +1,6 @@
-<?php namespace Groovey\Migration\Adapters;
+<?php
+
+namespace Groovey\Migration\Adapters;
 
 interface AdapterInterface
 {

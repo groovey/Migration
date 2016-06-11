@@ -1,9 +1,12 @@
-<?php namespace Groovey\Migration\Commands;
+<?php
+
+namespace Groovey\Migration\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Yaml\Parser;
 use Illuminate\Database\Capsule\Manager as DB;
 use Groovey\Migration\Models\Migration;
@@ -36,13 +39,20 @@ class Down extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $dir    = Manager::getDirectory();
+        $yaml   = new Parser();
+        $param  = $input->getArgument('param');
+        $helper = $this->getHelper('question');
 
-        $dir   = Manager::getDirectory();
-        $yaml  = new Parser();
-        $param = $input->getArgument('param');
+        $question = new ConfirmationQuestion(
+            '<question>Are you sure you want to proceed? (y/N):</question> ',
+            false);
+
+        if (!$helper->ask($input, $output, $question)) {
+            return;
+        }
 
         if ($param) {
-
             $record = Migration::where('version', '=', $param)->first();
 
             if (!$record) {
@@ -52,24 +62,22 @@ class Down extends Command
             }
 
             $records = Migration::where('id', '>=', $record->id)
-                            ->orderBy('version' , 'DESC')
+                            ->orderBy('version', 'DESC')
                             ->get();
-
         } else {
             $records = Migration::orderBy('version', 'DESC')->take(1)->get();
         }
 
         foreach ($records as $record) {
-
             $id          = $record->id;
             $version     = $record->version;
             $description = $record->description;
 
-            $file = $version . '_' . str_replace(' ', '_', $description) . '.yml';
+            $file = $version.'_'.str_replace(' ', '_', $description).'.yml';
 
             $output->writeln("<info>Downgrading migration file ($file).</info>");
 
-            $value = $yaml->parse(file_get_contents($dir . '/' . $file));
+            $value = $yaml->parse(file_get_contents($dir.'/'.$file));
 
             $down  = explode(';', trim($value['DOWN']));
             $down  = array_filter($down);

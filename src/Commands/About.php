@@ -1,4 +1,6 @@
-<?php namespace Groovey\Migration\Commands;
+<?php
+
+namespace Groovey\Migration\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,8 +23,7 @@ class About extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
-$about = <<<ABOUT
+        $about = <<<ABOUT
  <comment>
     ______
    / ____/________  ____ _   _____  __  __
@@ -42,5 +43,4 @@ ABOUT;
 
         $output->writeln($about);
     }
-
 }

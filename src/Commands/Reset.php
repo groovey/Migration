@@ -1,10 +1,11 @@
-<?php namespace Groovey\Migration\Commands;
+<?php
+
+namespace Groovey\Migration\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
-use Groovey\Migration\Models\Migration;
 use Groovey\Migration\Adapters\Adapter;
 
 class Reset extends Command
@@ -28,7 +29,6 @@ class Reset extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $helper = $this->getHelper('question');
 
         $question = new ConfirmationQuestion(

@@ -1,4 +1,6 @@
-<?php namespace Groovey\Migration\Models;
+<?php
+
+namespace Groovey\Migration\Models;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 

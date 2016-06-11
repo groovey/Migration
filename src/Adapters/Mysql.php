@@ -1,4 +1,6 @@
-<?php namespace Groovey\Migration\Adapters;
+<?php
+
+namespace Groovey\Migration\Adapters;
 
 use Illuminate\Database\Capsule\Manager as DB;
 
@@ -6,7 +8,6 @@ class Mysql implements AdapterInterface
 {
     public static function create()
     {
-
         $sql = '
             CREATE TABLE IF NOT EXISTS `migrations` (
               `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -33,5 +34,4 @@ class Mysql implements AdapterInterface
 
         return DB::statement($sql);
     }
-
 }

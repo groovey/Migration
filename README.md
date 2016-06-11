@@ -31,18 +31,17 @@ On your project root folder. Create a file called `groovey`.
 
 set_time_limit(0);
 
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/database.php';
+require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/database.php';
 
 use Symfony\Component\Console\Application;
 use Groovey\Migration\Adapters\Adapter;
 use Groovey\Migration\Adapters\Mysql;
 use Groovey\Migration\Migration;
-use Groovey\Migration\Commands;
 
-$adapter   = new Adapter(new Mysql);
+$adapter   = new Adapter(new Mysql());
 $migration = new Migration($adapter);
-$app       = new Application;
+$app       = new Application();
 
 $app->addCommands(
         $migration->getCommands()
@@ -51,6 +50,7 @@ $app->addCommands(
 $status = $app->run();
 
 exit($status);
+
 ```
 
 ## Step 3 - The Database Bootstrap File
@@ -62,7 +62,7 @@ Change the default parameters of the database to your environment settings.
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-$capsule = new Capsule;
+$capsule = new Capsule();
 
 $capsule->addConnection([
     'driver'    => 'mysql',
@@ -72,13 +72,14 @@ $capsule->addConnection([
     'password'  => 'webdevel',
     'charset'   => 'utf8',
     'collation' => 'utf8_general_ci',
-    'prefix'    => ''
+    'prefix'    => '',
 ], 'default');
 
 $capsule->bootEloquent();
 $capsule->setAsGlobal();
 
 return $capsule;
+
 ```
 
 Good job! Your now ready to discover the painless way of doing migrations.
@@ -105,9 +106,9 @@ Setup your migration directory relative to your root folder `./database/migratio
 
 Automatically create the yaml file.
 
-    $ groovey migrate:create Create A Test Table
+    $ groovey migrate:create create_test
 
-The command will generate the formatted file like `001_create_a_test_table.yml`.
+The command will generate the formatted file like `001_create_test.yml`.
 
 ## The YML file
 

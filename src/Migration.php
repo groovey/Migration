@@ -19,7 +19,7 @@ class Migration
         $date = $now->format('Y-m-d H:i:s');
 
         $yaml = <<<YML
-# Author: Name <your@email.com>
+# Author: Name
 # Date: $date
 
 # Run the migration

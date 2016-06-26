@@ -26,56 +26,43 @@ On your project root folder. Create a file called `groovey`.
 set_time_limit(0);
 
 require_once __DIR__.'/vendor/autoload.php';
-require_once __DIR__.'/database.php';
 
 use Symfony\Component\Console\Application;
-use Groovey\Migration\Adapters\Adapter;
-use Groovey\Migration\Adapters\Mysql;
-use Groovey\Migration\Migration;
+use Groovey\Migration\Commands\Migration;
+use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\DriverManager;
 
-$adapter   = new Adapter(new Mysql());
-$migration = new Migration($adapter);
-$app       = new Application();
+$db = [
+        'dbname'   => 'migration',
+        'user'     => 'root',
+        'password' => 'webdevel',
+        'host'     => 'localhost',
+        'driver'   => 'pdo_mysql',
+    ];
 
-$app->addCommands(
-        $migration->getCommands()
-    );
+$config = new Configuration();
+$conn   = DriverManager::getConnection($db, $config);
+$app    = new Application();
+
+$container['db'] = $conn;
+
+$app->addCommands([
+        new Groovey\Migration\Commands\About(),
+        new Groovey\Migration\Commands\Init($container),
+        new Groovey\Migration\Commands\Reset($container),
+        new Groovey\Migration\Commands\Listing($container),
+        new Groovey\Migration\Commands\Drop($container),
+        new Groovey\Migration\Commands\Status($container),
+        new Groovey\Migration\Commands\Create($container),
+        new Groovey\Migration\Commands\Up($container),
+        new Groovey\Migration\Commands\Down($container),
+    ]);
 
 $status = $app->run();
 
 exit($status);
-
 ```
-
-## Step 3 - The Database Bootstrap File
-
-Change the default parameters of the database to your environment settings.
-
-```php
-<?php
-
-use Illuminate\Database\Capsule\Manager as Capsule;
-
-$capsule = new Capsule();
-
-$capsule->addConnection([
-    'driver'    => 'mysql',
-    'host'      => 'localhost',
-    'database'  => 'migration',
-    'username'  => 'root',
-    'password'  => 'webdevel',
-    'charset'   => 'utf8',
-    'collation' => 'utf8_general_ci',
-    'prefix'    => '',
-], 'default');
-
-$capsule->bootEloquent();
-$capsule->setAsGlobal();
-
-return $capsule;
-
-```
-
+ 
 Good job! Your now ready to discover the painless way of doing migrations.
 
 ## List of Commands
@@ -90,13 +77,13 @@ Good job! Your now ready to discover the painless way of doing migrations.
 - [Drop](#drop)
 - [About](#about)
 
-## Step 4 - Init
+## Init
 
 Setup your migration directory relative to your root folder `./database/migrations`.
 
     $ groovey migrate:init
 
-## Step 5 - Create
+## Create
 
 Automatically create the yaml file.
 
@@ -137,7 +124,7 @@ DOWN: >
     DROP TABLE test;
 ```
 
-## Step 6 - Step Status
+## Status
 
 Running this command will check all the unmigrated yaml files.
 
@@ -153,7 +140,7 @@ Sample output:
 +-----------------------------+
 ```
 
-## Step 7 - Up
+## Up
 
 Runs the migration `UP` script.
 
@@ -182,7 +169,7 @@ Sample output:
 ```
 
 
-## Step 9 - Down
+## Down
 
 Reverse the last migration.
 
@@ -197,7 +184,7 @@ Sample output:
     Downgrading migration file (001_create_a_test_table.yml).
 
 
-## Step 10 - Reset
+## Reset
 
 Truncates all migrated records.
 
@@ -208,7 +195,7 @@ Sample output:
     All datas will be truncated, are you sure you want to proceed? (Y/N): Y
     All datas has been cleared.
 
-## Step 11 - Drop
+## Drop
 
 Drops the `migrations` table.
 

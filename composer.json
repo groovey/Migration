@@ -1,6 +1,6 @@
 {
     "name": "groovey/migration",
-    "description": "A KISS migration script using configuration file.",
+    "description": "A migration script using native sql.",
     "license": "MIT",
     "keywords": ["groovey", "framework", "simple"],
     "authors": [

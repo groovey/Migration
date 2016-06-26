@@ -67,7 +67,7 @@ YML;
         return $version.'_'.strtolower($argument).'.yml';
     }
 
-    public function getAllFiles()
+    public static function getAllFiles()
     {
         $finder = new Finder();
 

@@ -6,18 +6,15 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
-use Groovey\Migration\Models\Migration;
-use Groovey\Migration\Adapters\Adapter;
 
 class Listing extends Command
 {
-    private $adapter;
+    private $app;
 
-    public function __construct(Adapter $adapter)
+    public function __construct($app)
     {
         parent::__construct();
-
-        $this->adapter = $adapter;
+        $this->app = $app;
     }
 
     protected function configure()
@@ -28,18 +25,26 @@ class Listing extends Command
         ;
     }
 
+    private function getList()
+    {
+        $app   = $this->app;
+        $query = 'SELECT * FROM migrations ORDER BY version ASC';
+
+        return $app['db']->fetchAll($query);
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $migrations = Migration::orderBy('version')->get();
+        $migrations = $this->getList();
 
         $datas = [];
 
         foreach ($migrations as $migration) {
             $datas[] = [
-                'id'          => $migration->id,
-                'version'     => $migration->version,
-                'description' => $migration->description,
-                'created at'  => $migration->created_at,
+                'id'          => $migration['id'],
+                'version'     => $migration['version'],
+                'description' => $migration['description'],
+                'created at'  => $migration['created_at'],
             ];
         }
 

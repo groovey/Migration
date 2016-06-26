@@ -4,20 +4,37 @@
 set_time_limit(0);
 
 require_once __DIR__.'/vendor/autoload.php';
-require_once __DIR__.'/database.php';
 
 use Symfony\Component\Console\Application;
-use Groovey\Migration\Adapters\Adapter;
-use Groovey\Migration\Adapters\Mysql;
-use Groovey\Migration\Migration;
+use Groovey\Migration\Commands\Migration;
+use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\DriverManager;
 
-$adapter   = new Adapter(new Mysql());
-$migration = new Migration($adapter);
-$app       = new Application();
+$db = [
+        'dbname'   => 'migration',
+        'user'     => 'root',
+        'password' => 'webdevel',
+        'host'     => 'localhost',
+        'driver'   => 'pdo_mysql',
+    ];
 
-$app->addCommands(
-        $migration->getCommands()
-    );
+$config = new Configuration();
+$conn   = DriverManager::getConnection($db, $config);
+$app    = new Application();
+
+$container['db'] = $conn;
+
+$app->addCommands([
+        new Groovey\Migration\Commands\About(),
+        new Groovey\Migration\Commands\Init($container),
+        new Groovey\Migration\Commands\Reset($container),
+        new Groovey\Migration\Commands\Listing($container),
+        new Groovey\Migration\Commands\Drop($container),
+        new Groovey\Migration\Commands\Status($container),
+        new Groovey\Migration\Commands\Create($container),
+        new Groovey\Migration\Commands\Up($container),
+        new Groovey\Migration\Commands\Down($container),
+    ]);
 
 $status = $app->run();
 

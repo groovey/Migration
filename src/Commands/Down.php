@@ -8,20 +8,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Yaml\Parser;
-use Illuminate\Database\Capsule\Manager as DB;
-use Groovey\Migration\Models\Migration;
-use Groovey\Migration\Adapters\Adapter;
-use Groovey\Migration\Manager;
+use Groovey\Migration\Migration;
 
 class Down extends Command
 {
-    private $adapter;
+    private $app;
 
-    public function __construct(Adapter $adapter)
+    public function __construct($app)
     {
         parent::__construct();
 
-        $this->adapter = $adapter;
+        $this->app = $app;
     }
 
     protected function configure()
@@ -39,7 +36,8 @@ class Down extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dir    = Manager::getDirectory();
+        $app    = $this->app;
+        $dir    = Migration::getDirectory();
         $yaml   = new Parser();
         $param  = $input->getArgument('param');
         $helper = $this->getHelper('question');
@@ -53,7 +51,7 @@ class Down extends Command
         }
 
         if ($param) {
-            $record = Migration::where('version', '=', $param)->first();
+            $record = $app['db']->fetchAssoc("SELECT * FROM migrations WHERE version = $param LIMIT 1");
 
             if (!$record) {
                 $output->writeln('<error>Unable to find migration version.</error>');
@@ -61,17 +59,18 @@ class Down extends Command
                 return;
             }
 
-            $records = Migration::where('id', '>=', $record->id)
-                            ->orderBy('version', 'DESC')
-                            ->get();
+            $id = $record['id'];
+
+            $query   = "SELECT * FROM migrations WHERE id >= {$id} ORDER BY version DESC";
+            $records = $app['db']->fetchAll($query);
         } else {
-            $records = Migration::orderBy('version', 'DESC')->take(1)->get();
+            $records = $app['db']->fetchAll('SELECT * FROM migrations ORDER BY version DESC LIMIT 1');
         }
 
         foreach ($records as $record) {
-            $id          = $record->id;
-            $version     = $record->version;
-            $description = $record->description;
+            $id          = $record['id'];
+            $version     = $record['version'];
+            $description = $record['description'];
 
             $file = $version.'_'.str_replace(' ', '_', $description).'.yml';
 
@@ -83,11 +82,10 @@ class Down extends Command
             $down  = array_filter($down);
 
             foreach ($down as $query) {
-                DB::statement(trim($query));
+                $app['db']->executeQuery(trim($query));
             }
 
-            $data = Migration::find($id);
-            $data->delete();
+            $app['db']->delete('migrations', ['id' => $id]);
         }
     }
 }

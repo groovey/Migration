@@ -6,19 +6,17 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Groovey\Migration\Manager;
-use Groovey\Migration\Models\Migration;
-use Groovey\Migration\Adapters\Adapter;
+use Groovey\Migration\Migration;
 
 class Create extends Command
 {
-    private $adapter;
+    private $app;
 
-    public function __construct(Adapter $adapter)
+    public function __construct($app)
     {
         parent::__construct();
 
-        $this->adapter = $adapter;
+        $this->app = $app;
     }
 
     protected function configure()
@@ -47,9 +45,9 @@ class Create extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $directory = Manager::getDirectory();
-        $filename  = Manager::getGeneratedFilename($this->getArguments($input));
-        $data      = Manager::getTemplate();
+        $directory = Migration::getDirectory();
+        $filename  = Migration::getGeneratedFilename($this->getArguments($input));
+        $data      = Migration::getTemplate();
 
         file_put_contents($directory.'/'.$filename, $data);
 

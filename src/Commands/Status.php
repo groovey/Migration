@@ -6,18 +6,17 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
-use Groovey\Migration\Adapters\Adapter;
-use Groovey\Migration\Manager;
+use Groovey\Migration\Migration;
 
 class Status extends Command
 {
-    private $adapter;
+    private $app;
 
-    public function __construct(Adapter $adapter)
+    public function __construct($app)
     {
         parent::__construct();
 
-        $this->adapter = $adapter;
+        $this->app = $app;
     }
 
     protected function configure()
@@ -31,7 +30,7 @@ class Status extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $files = [];
-        foreach (Manager::getUnMigratedFiles() as $file) {
+        foreach (Migration::getUnMigratedFiles($this->app) as $file) {
             $files[] = [$file];
         }
 

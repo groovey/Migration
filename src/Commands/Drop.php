@@ -6,18 +6,16 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
-use Groovey\Migration\Models\Migration;
-use Groovey\Migration\Adapters\Adapter;
 
 class Drop extends Command
 {
     private $adapter;
 
-    public function __construct(Adapter $adapter)
+    public function __construct($app)
     {
         parent::__construct();
 
-        $this->adapter = $adapter;
+        $this->app = $app;
     }
 
     protected function configure()
@@ -28,19 +26,27 @@ class Drop extends Command
         ;
     }
 
+    private function drop()
+    {
+        $app   = $this->app;
+        $query = 'DROP TABLE IF EXISTS `migrations`;';
+
+        return $app['db']->executeQuery($query);
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $helper = $this->getHelper('question');
 
         $question = new ConfirmationQuestion(
-            '<question>Migration table will be drop, are you sure you want to proceed? (y/N):</question> ',
+            '<question>Migrations table will be drop, are you sure you want to proceed? (y/N):</question> ',
             false);
 
         if (!$helper->ask($input, $output, $question)) {
             return;
         }
 
-        $this->adapter->drop();
+        $this->drop();
 
         $text = '<info>Migrations table is now gone.</info>';
 

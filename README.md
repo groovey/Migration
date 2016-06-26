@@ -11,13 +11,7 @@ A simple migration script tool that uses yaml file for native sql script. What i
 
 Install using composer. To learn more about composer, visit: https://getcomposer.org/
 
-```json
-{
-    "require": {
-        "groovey/migration": "~1.2"
-    }
-}
-```
+    $ composer require groovey/migration
 
 Then run `composer.phar update`.
 

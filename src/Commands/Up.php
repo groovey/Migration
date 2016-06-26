@@ -6,20 +6,17 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Parser;
-use Illuminate\Database\Capsule\Manager as DB;
-use Groovey\Migration\Models\Migration;
-use Groovey\Migration\Adapters\Adapter;
-use Groovey\Migration\Manager;
+use Groovey\Migration\Migration;
 
 class Up extends Command
 {
-    private $adapter;
+    private $app;
 
-    public function __construct(Adapter $adapter)
+    public function __construct($app)
     {
         parent::__construct();
 
-        $this->adapter = $adapter;
+        $this->app = $app;
     }
 
     protected function configure()
@@ -32,12 +29,12 @@ class Up extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $yaml = new Parser();
-
-        $dir = Manager::getDirectory();
+        $app     = $this->app;
+        $yaml    = new Parser();
+        $dir     = Migration::getDirectory();
 
         $files = [];
-        foreach (Manager::getUnMigratedFiles() as $file) {
+        foreach (Migration::getUnMigratedFiles($app) as $file) {
             $output->writeln("<info>Running migration file ($file).</info>");
 
             $value = $yaml->parse(file_get_contents($dir.'/'.$file));
@@ -46,16 +43,16 @@ class Up extends Command
             $up = array_filter($up);
 
             foreach ($up as $query) {
-                DB::statement(trim($query));
+                $app['db']->executeQuery(trim($query));
             }
 
-            $info = Manager::getFileInfo($file);
+            $info = Migration::getFileInfo($file);
 
-            $entry              = new Migration();
-            $entry->version     = $info['version'];
-            $entry->description = $info['description'];
-            $entry->created_at  = new \DateTime();
-            $entry->save();
+            $app['db']->insert('migrations', [
+                    'version'     => $info['version'],
+                    'description' => $info['description'],
+                    'created_at'  => date('Y-m-d H:i:s'),
+                ]);
 
             $files[] = [$file];
         }

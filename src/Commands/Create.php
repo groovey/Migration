@@ -51,7 +51,7 @@ class Create extends Command
 
         file_put_contents($directory.'/'.$filename, $data);
 
-        $text = '<info>Sucessfully created migration file.</info>';
+        $text = '<info>Sucessfully created migration a file.</info>';
         $output->writeln($text);
     }
 }

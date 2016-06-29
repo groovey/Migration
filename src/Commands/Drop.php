@@ -31,7 +31,7 @@ class Drop extends Command
         $app   = $this->app;
         $query = 'DROP TABLE IF EXISTS `migrations`;';
 
-        return $app['db']->executeQuery($query);
+        return $app['db']::statement($query);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

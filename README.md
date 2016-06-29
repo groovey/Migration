@@ -1,69 +1,24 @@
-# Groovey Migration
+## Groovey Migration
 
-A simple migration script tool that uses yaml file for native sql script. What it means is that there no more need for you to learn a new migration database language. Use `native sql language` code at your comfort.
-
+A simple migration script tool that uses native SQL scripts.
 
 ## Usage
 
     $ groovey migrate:up
 
-## Step 1 - Installation
-
-Install using composer. To learn more about composer, visit: https://getcomposer.org/
+## Installation
 
     $ composer require groovey/migration
 
-Then run `composer.phar update`.
 
-## Step 2 - The Groovey File
+## Setup
 
 On your project root folder. Create a file called `groovey`.
 
 ```php
 #!/usr/bin/env php
-<?php
 
-set_time_limit(0);
-
-require_once __DIR__.'/vendor/autoload.php';
-
-use Symfony\Component\Console\Application;
-use Groovey\Migration\Commands\Migration;
-use Doctrine\DBAL\Configuration;
-use Doctrine\DBAL\DriverManager;
-
-$db = [
-        'dbname'   => 'migration',
-        'user'     => 'root',
-        'password' => 'webdevel',
-        'host'     => 'localhost',
-        'driver'   => 'pdo_mysql',
-    ];
-
-$config = new Configuration();
-$conn   = DriverManager::getConnection($db, $config);
-$app    = new Application();
-
-$container['db'] = $conn;
-
-$app->addCommands([
-        new Groovey\Migration\Commands\About(),
-        new Groovey\Migration\Commands\Init($container),
-        new Groovey\Migration\Commands\Reset($container),
-        new Groovey\Migration\Commands\Listing($container),
-        new Groovey\Migration\Commands\Drop($container),
-        new Groovey\Migration\Commands\Status($container),
-        new Groovey\Migration\Commands\Create($container),
-        new Groovey\Migration\Commands\Up($container),
-        new Groovey\Migration\Commands\Down($container),
-    ]);
-
-$status = $app->run();
-
-exit($status);
 ```
- 
-Good job! Your now ready to discover the painless way of doing migrations.
 
 ## List of Commands
 
@@ -151,7 +106,7 @@ Sample output:
 
     Running migration file (001_create_a_test_table.yml).
 
-## Step 8 - List
+## List
 
 Shows all the migrated yml scripts.
 
@@ -212,14 +167,6 @@ Sample output:
 Shows the library information details.
 
     $ groovey migrate:about
-
-## Like us.
-
-Give a `star` to show your support and love for the project.
-
-## Contribution
-
-Fork `Groovey Migration` and send us some issues.
 
 
 

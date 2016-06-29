@@ -9,6 +9,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Yaml\Parser;
 use Groovey\Migration\Migration;
+use Groovey\Migration\Models\Migration as Migrations;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class Down extends Command
 {
@@ -51,7 +53,7 @@ class Down extends Command
         }
 
         if ($param) {
-            $record = $app['db']->fetchAssoc("SELECT * FROM migrations WHERE version = $param LIMIT 1");
+            $record = Migrations::where('version', '=', $param)->first();
 
             if (!$record) {
                 $output->writeln('<error>Unable to find migration version.</error>');
@@ -59,18 +61,17 @@ class Down extends Command
                 return;
             }
 
-            $id = $record['id'];
-
-            $query   = "SELECT * FROM migrations WHERE id >= {$id} ORDER BY version DESC";
-            $records = $app['db']->fetchAll($query);
+            $records = Migrations::where('id', '>=', $record->id)
+                            ->orderBy('version', 'DESC')
+                            ->get();
         } else {
-            $records = $app['db']->fetchAll('SELECT * FROM migrations ORDER BY version DESC LIMIT 1');
+            $records = Migrations::orderBy('version', 'DESC')->take(1)->get();
         }
 
         foreach ($records as $record) {
-            $id          = $record['id'];
-            $version     = $record['version'];
-            $description = $record['description'];
+            $id          = $record->id;
+            $version     = $record->version;
+            $description = $record->description;
 
             $file = $version.'_'.str_replace(' ', '_', $description).'.yml';
 
@@ -82,10 +83,11 @@ class Down extends Command
             $down  = array_filter($down);
 
             foreach ($down as $query) {
-                $app['db']->executeQuery(trim($query));
+                DB::statement(trim($query));
             }
 
-            $app['db']->delete('migrations', ['id' => $id]);
+            $data = Migrations::find($id);
+            $data->delete();
         }
     }
 }

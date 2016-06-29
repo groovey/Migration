@@ -2,7 +2,7 @@
     "name": "groovey/migration",
     "description": "A migration script using native sql.",
     "license": "MIT",
-    "keywords": ["groovey", "framework", "simple"],
+    "keywords": ["groovey", "migration", "simple"],
     "authors": [
         {
             "name": "Harold Kim Cantil",
@@ -10,19 +10,15 @@
         }
     ],
     "require": {
+        "illuminate/database" : "~5.2",
+        "illuminate/events": "~5.2",
         "symfony/console": "~3.0",
         "symfony/finder": "~3.0",
-        "symfony/yaml"  : "~3.0",
-        "doctrine/dbal" : "~2.5",
-        "doctrine/orm"  : "~2.5"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "~4.8"
+        "symfony/yaml"  : "~3.0"
     },
     "autoload": {
         "psr-4": {
             "Groovey\\Migration\\": "src"
         }
     }
-
 }

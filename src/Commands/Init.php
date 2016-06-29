@@ -38,7 +38,7 @@ class Init extends Command
                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
             ';
 
-        return $app['db']->executeQuery($query);
+        return $app['db']::statement($query);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -30,7 +30,7 @@ class Reset extends Command
         $app = $this->app;
         $sql = 'TRUNCATE TABLE `migrations`';
 
-        return $app['db']->executeQuery($sql);
+        return $app['db']::statement($sql);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -38,7 +38,7 @@ class Reset extends Command
         $helper = $this->getHelper('question');
 
         $question = new ConfirmationQuestion(
-            '<question>All datas will be truncated, are you sure you want to proceed? (y/N):</question> ',
+            '<question>All migration entries will be cleared, are you sure you want to proceed? (y/N):</question> ',
             false);
 
         if (!$helper->ask($input, $output, $question)) {
@@ -47,7 +47,7 @@ class Reset extends Command
 
         $this->truncate();
 
-        $text = '<info>All datas has been cleared.</info>';
+        $text = '<info>All migration entries has been cleared.</info>';
 
         $output->writeln($text);
     }

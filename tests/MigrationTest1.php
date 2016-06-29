@@ -2,7 +2,7 @@
 
 use Groovey\Migration\Migration;
 
-class migrationTest extends PHPUnit_Framework_TestCase
+class MigrationTest extends PHPUnit_Framework_TestCase
 {
     public function testSatus()
     {

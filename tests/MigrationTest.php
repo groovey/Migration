@@ -5,6 +5,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Groovey\Migration\Commands\About;
 use Groovey\Migration\Commands\Init;
+use Groovey\Migration\Commands\Reset;
 
 class MigrationTest extends PHPUnit_Framework_TestCase
 {
@@ -27,6 +28,15 @@ class MigrationTest extends PHPUnit_Framework_TestCase
         $capsule->setAsGlobal();
 
         return $capsule;
+    }
+
+    protected function getInputStream($input)
+    {
+        $stream = fopen('php://memory', 'r+', false);
+        fputs($stream, $input);
+        rewind($stream);
+
+        return $stream;
     }
 
     public function testAbout()
@@ -57,9 +67,26 @@ class MigrationTest extends PHPUnit_Framework_TestCase
                 'command' => $command->getName(),
             ]);
 
-        print_r( $tester->getDisplay() );
-
-
         $this->assertRegExp('/Sucessfully/', $tester->getDisplay());
+    }
+
+    public function testReset()
+    {
+        $app = new Application();
+        $container['db'] = $this->connect();
+
+        $app->add(new Reset($container));
+        $command = $app->find('migrate:reset');
+
+        $tester = new CommandTester($command);
+        $helper = $command->getHelper('question');
+        $helper->setInputStream($this->getInputStream("Y\n"));
+
+        $tester->execute([
+                'command' => $command->getName(),
+            ]);
+
+        $this->assertRegExp('/All migration entries has been cleared/',
+                $tester->getDisplay());
     }
 }

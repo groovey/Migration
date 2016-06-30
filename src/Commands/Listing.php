@@ -6,7 +6,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
-use Illuminate\Database\Capsule\Manager as DB;
 
 class Listing extends Command
 {
@@ -29,7 +28,8 @@ class Listing extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $migrations = DB::table('migrations')->orderBy('version')->get();
+        $app = $this->app;
+        $migrations = $app['db']->table('migrations')->orderBy('version')->get();
 
         $datas = [];
 

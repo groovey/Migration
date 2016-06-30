@@ -7,8 +7,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Parser;
 use Groovey\Migration\Migration;
-use Groovey\Migration\Models\Migration as Migrations;
-use Illuminate\Database\Capsule\Manager as DB;
 
 class Up extends Command
 {
@@ -50,11 +48,11 @@ class Up extends Command
 
             $info = Migration::getFileInfo($file);
 
-            $entry              = new Migrations();
-            $entry->version     = $info['version'];
-            $entry->description = $info['description'];
-            $entry->created_at  = new \DateTime();
-            $entry->save();
+            $app['db']->table('migrations')->insert([
+                    'version'     => $info['version'],
+                    'description' => $info['description'],
+                    'created_at'  => new \DateTime(),
+                ]);
 
             $files[] = [$file];
         }

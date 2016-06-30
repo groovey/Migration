@@ -25,16 +25,9 @@ class Reset extends Command
         ;
     }
 
-    private function truncate()
-    {
-        $app = $this->app;
-        $sql = 'TRUNCATE TABLE `migrations`';
-
-        return $app['db']::statement($sql);
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $app    = $this->app;
         $helper = $this->getHelper('question');
 
         $question = new ConfirmationQuestion(
@@ -45,7 +38,7 @@ class Reset extends Command
             return;
         }
 
-        $this->truncate();
+        $app['db']->table('migrations')->truncate();
 
         $text = '<info>All migration entries has been cleared.</info>';
 

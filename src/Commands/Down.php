@@ -9,8 +9,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Yaml\Parser;
 use Groovey\Migration\Migration;
-use Groovey\Migration\Models\Migration as Migrations;
-use Illuminate\Database\Capsule\Manager as DB;
 
 class Down extends Command
 {
@@ -53,7 +51,7 @@ class Down extends Command
         }
 
         if ($param) {
-            $record = Migrations::where('version', '=', $param)->first();
+            $record = $app['db']->table('migrations')->where('version', '=', $param)->first();
 
             if (!$record) {
                 $output->writeln('<error>Unable to find migration version.</error>');
@@ -61,11 +59,11 @@ class Down extends Command
                 return;
             }
 
-            $records = Migrations::where('id', '>=', $record->id)
+            $records = $app['db']->table('migrations')->where('id', '>=', $record->id)
                             ->orderBy('version', 'DESC')
                             ->get();
         } else {
-            $records = Migrations::orderBy('version', 'DESC')->take(1)->get();
+            $records = $app['db']->table('migrations')->orderBy('version', 'DESC')->take(1)->get();
         }
 
         foreach ($records as $record) {
@@ -83,11 +81,10 @@ class Down extends Command
             $down  = array_filter($down);
 
             foreach ($down as $query) {
-                DB::statement(trim($query));
+                $app['db']::statement(trim($query));
             }
 
-            $data = Migrations::find($id);
-            $data->delete();
+            $app['db']->table('migrations')->delete($id);
         }
     }
 }

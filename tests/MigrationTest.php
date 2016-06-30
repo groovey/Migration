@@ -9,6 +9,7 @@ use Groovey\Migration\Commands\Status;
 use Groovey\Migration\Commands\Up;
 use Groovey\Migration\Commands\Down;
 use Groovey\Migration\Commands\Drop;
+
 // use Groovey\Migration\Commands\Create;
 
 class MigrationTest extends PHPUnit_Framework_TestCase
@@ -67,10 +68,9 @@ class MigrationTest extends PHPUnit_Framework_TestCase
 
         $tester = new Tester();
         $tester->command(new Status($container), 'migrate:status');
-        $this->assertRegExp('/Unmigrated SQL/',$tester->getDisplay());
-        $this->assertRegExp('/001_users.yml/',$tester->getDisplay());
+        $this->assertRegExp('/Unmigrated SQL/', $tester->getDisplay());
+        $this->assertRegExp('/001_users.yml/', $tester->getDisplay());
     }
-
 
     public function testUp()
     {
@@ -79,7 +79,7 @@ class MigrationTest extends PHPUnit_Framework_TestCase
         $tester = new Tester();
         $tester->command(new Up($container), 'migrate:up');
 
-        $this->assertRegExp('/Running migration file/',$tester->getDisplay());
+        $this->assertRegExp('/Running migration file/', $tester->getDisplay());
     }
 
     public function testListing()
@@ -88,8 +88,8 @@ class MigrationTest extends PHPUnit_Framework_TestCase
 
         $tester = new Tester();
         $tester->command(new Listing($container), 'migrate:list');
-        $this->assertRegExp('/Id | Version/',$tester->getDisplay());
-        $this->assertRegExp('/1  | 001/',$tester->getDisplay());
+        $this->assertRegExp('/Id | Version/', $tester->getDisplay());
+        $this->assertRegExp('/1  | 001/', $tester->getDisplay());
     }
 
     public function testDown()
@@ -97,10 +97,9 @@ class MigrationTest extends PHPUnit_Framework_TestCase
         $container['db'] = $this->connect();
 
         $tester = new Tester();
-        $tester->command(new Down($container), 'migrate:down' ,'Y\n');
+        $tester->command(new Down($container), 'migrate:down', 'Y\n');
 
-
-        $this->assertRegExp('/Downgrading migration file/',$tester->getDisplay());
+        $this->assertRegExp('/Downgrading migration file/', $tester->getDisplay());
     }
     public function testDrop()
     {

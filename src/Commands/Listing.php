@@ -27,7 +27,6 @@ class Listing extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $app = $this->app;
         $migrations = $app['db']->table('migrations')->orderBy('version')->get();
 

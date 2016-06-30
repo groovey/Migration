@@ -3,7 +3,6 @@
 namespace Groovey\Migration;
 
 use Symfony\Component\Finder\Finder;
-use Groovey\Migration\Models\Migration as Migrations;
 
 class Migration
 {
@@ -91,7 +90,7 @@ YML;
     {
         $records = function ($app) {
             $version = [];
-            $migrations = Migrations::orderBy('version')->get();
+             $migrations = $app['db']->table('migrations')->orderBy('version')->get();
             foreach ($migrations as $file) {
                 $version[] = $file->version;
             }

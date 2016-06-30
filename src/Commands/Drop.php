@@ -39,7 +39,7 @@ class Drop extends Command
         $helper = $this->getHelper('question');
 
         $question = new ConfirmationQuestion(
-            '<question>Migrations table will be drop, are you sure you want to proceed? (y/N):</question> ',
+            '<question>Migrations table will be deleted, are you sure you want to proceed? (y/N):</question> ',
             false);
 
         if (!$helper->ask($input, $output, $question)) {
@@ -48,7 +48,7 @@ class Drop extends Command
 
         $this->drop();
 
-        $text = '<info>Migrations table is now gone.</info>';
+        $text = '<info>Migrations table has been deleted.</info>';
 
         $output->writeln($text);
     }

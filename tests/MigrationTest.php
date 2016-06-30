@@ -1,11 +1,15 @@
 <?php
 
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Tester\CommandTester;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Groovey\Migration\Commands\About;
 use Groovey\Migration\Commands\Init;
 use Groovey\Migration\Commands\Reset;
+use Groovey\Migration\Commands\Listing;
+use Groovey\Migration\Commands\Status;
+use Groovey\Migration\Commands\Up;
+use Groovey\Migration\Commands\Down;
+use Groovey\Migration\Commands\Drop;
+// use Groovey\Migration\Commands\Create;
 
 class MigrationTest extends PHPUnit_Framework_TestCase
 {
@@ -30,63 +34,80 @@ class MigrationTest extends PHPUnit_Framework_TestCase
         return $capsule;
     }
 
-    protected function getInputStream($input)
-    {
-        $stream = fopen('php://memory', 'r+', false);
-        fputs($stream, $input);
-        rewind($stream);
-
-        return $stream;
-    }
-
     public function testAbout()
     {
-        $app = new Application();
-        $app->add(new About());
-
-        $command = $app->find('migrate:about');
-
-        $tester = new CommandTester($command);
-        $tester->execute([
-                'command' => $command->getName(),
-            ]);
-
+        $tester = new Tester();
+        $tester->command(new About(), 'migrate:about');
         $this->assertRegExp('/Groovey/', $tester->getDisplay());
     }
 
     public function testInit()
     {
-        $app = new Application();
         $container['db'] = $this->connect();
 
-        $app->add(new Init($container));
-        $command = $app->find('migrate:init');
-
-        $tester = new CommandTester($command);
-        $tester->execute([
-                'command' => $command->getName(),
-            ]);
-
+        $tester = new Tester();
+        $tester->command(new Init($container), 'migrate:init');
         $this->assertRegExp('/Sucessfully/', $tester->getDisplay());
     }
 
     public function testReset()
     {
-        $app = new Application();
         $container['db'] = $this->connect();
 
-        $app->add(new Reset($container));
-        $command = $app->find('migrate:reset');
-
-        $tester = new CommandTester($command);
-        $helper = $command->getHelper('question');
-        $helper->setInputStream($this->getInputStream("Y\n"));
-
-        $tester->execute([
-                'command' => $command->getName(),
-            ]);
+        $tester = new Tester();
+        $tester->command(new Reset($container), 'migrate:reset', 'Y\n');
 
         $this->assertRegExp('/All migration entries has been cleared/',
                 $tester->getDisplay());
+    }
+
+    public function testStatus()
+    {
+        $container['db'] = $this->connect();
+
+        $tester = new Tester();
+        $tester->command(new Status($container), 'migrate:status');
+        $this->assertRegExp('/Unmigrated SQL/',$tester->getDisplay());
+        $this->assertRegExp('/001_users.yml/',$tester->getDisplay());
+    }
+
+
+    public function testUp()
+    {
+        $container['db'] = $this->connect();
+
+        $tester = new Tester();
+        $tester->command(new Up($container), 'migrate:up');
+
+        $this->assertRegExp('/Running migration file/',$tester->getDisplay());
+    }
+
+    public function testListing()
+    {
+        $container['db'] = $this->connect();
+
+        $tester = new Tester();
+        $tester->command(new Listing($container), 'migrate:list');
+        $this->assertRegExp('/Id | Version/',$tester->getDisplay());
+        $this->assertRegExp('/1  | 001/',$tester->getDisplay());
+    }
+
+    public function testDown()
+    {
+        $container['db'] = $this->connect();
+
+        $tester = new Tester();
+        $tester->command(new Down($container), 'migrate:down' ,'Y\n');
+
+
+        $this->assertRegExp('/Downgrading migration file/',$tester->getDisplay());
+    }
+    public function testDrop()
+    {
+        $container['db'] = $this->connect();
+
+        $tester = new Tester();
+        $tester->command(new Drop($container), 'migrate:drop', 'Y\n');
+        $this->assertRegExp('/Migrations table has been deleted/', $tester->getDisplay());
     }
 }

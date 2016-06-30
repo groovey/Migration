@@ -43,7 +43,7 @@ class Listing extends Command
 
         $table = new Table($output);
         $table
-            ->setHeaders(['id', 'Version', 'Description', 'Created At'])
+            ->setHeaders(['Id', 'Version', 'Description', 'Created At'])
             ->setRows($datas);
 
         $table->render();

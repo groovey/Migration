@@ -1,4 +1,4 @@
-## Groovey Migration
+# Groovey Migration
 
 A simple migration script tool that uses native SQL scripts.
 
@@ -17,7 +17,50 @@ On your project root folder. Create a file called `groovey`.
 
 ```php
 #!/usr/bin/env php
+<?php
 
+set_time_limit(0);
+
+require_once __DIR__.'/vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Illuminate\Database\Capsule\Manager as Capsule;
+
+$capsule = new Capsule();
+
+$capsule->addConnection([
+    'driver'    => 'mysql',
+    'host'      => 'localhost',
+    'database'  => 'test',
+    'username'  => 'root',
+    'password'  => '',
+    'charset'   => 'utf8',
+    'collation' => 'utf8_general_ci',
+    'prefix'    => '',
+], 'default');
+
+$capsule->bootEloquent();
+$capsule->setAsGlobal();
+
+$container['db'] = $capsule;
+
+$app = new Application();
+
+$app->addCommands([
+        new Groovey\Migration\Commands\About(),
+        new Groovey\Migration\Commands\Init($container),
+        new Groovey\Migration\Commands\Reset($container),
+        new Groovey\Migration\Commands\Listing($container),
+        new Groovey\Migration\Commands\Drop($container),
+        new Groovey\Migration\Commands\Status($container),
+        new Groovey\Migration\Commands\Create($container),
+        new Groovey\Migration\Commands\Up($container),
+        new Groovey\Migration\Commands\Down($container),
+    ]);
+
+$status = $app->run();
+
+exit($status);
 ```
 
 ## List of Commands

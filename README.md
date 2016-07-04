@@ -1,6 +1,6 @@
-# Groovey Migration
+# Migration
 
-A simple migration script tool that uses native SQL scripts.
+Groovey Migration Package
 
 ## Usage
 

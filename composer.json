@@ -1,6 +1,6 @@
 {
     "name": "groovey/migration",
-    "description": "A migration script using native SQL.",
+    "description": "Groovey Migration Package",
     "license": "MIT",
     "keywords": ["groovey", "migration", "simple"],
     "authors": [

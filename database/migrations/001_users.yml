@@ -4,7 +4,7 @@
 # Run the migration
 UP: >
 
-    CREATE TABLE `sample` (
+    CREATE TABLE `users` (
     `id` int(11) NOT NULL,
     `status` ENUM('active', 'inactive'),
     `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
@@ -13,12 +13,12 @@ UP: >
     `modified_at` datetime NOT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-    ALTER TABLE `sample` ADD KEY `id` (`id`);
+    ALTER TABLE `users` ADD KEY `id` (`id`);
 
-    ALTER TABLE `sample` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
+    ALTER TABLE `users` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
 
 
 # Reverse the migration
 DOWN: >
 
-    DROP TABLE sample;
+    DROP TABLE users;

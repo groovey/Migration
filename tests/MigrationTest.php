@@ -69,7 +69,7 @@ class MigrationTest extends PHPUnit_Framework_TestCase
         $tester = new Tester();
         $tester->command(new Status($container), 'migrate:status');
         $this->assertRegExp('/Unmigrated SQL/', $tester->getDisplay());
-        $this->assertRegExp('/001_users.yml/', $tester->getDisplay());
+        $this->assertRegExp('/001_sample.yml/', $tester->getDisplay());
     }
 
     public function testUp()

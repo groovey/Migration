@@ -12,7 +12,9 @@ use Groovey\Migration\Commands\Drop;
 
 class MigrationTest extends PHPUnit_Framework_TestCase
 {
-    public function connect()
+    public $db;
+
+    public function setUp()
     {
         $capsule = new Capsule();
 
@@ -30,7 +32,7 @@ class MigrationTest extends PHPUnit_Framework_TestCase
         $capsule->bootEloquent();
         $capsule->setAsGlobal();
 
-        return $capsule;
+        $this->db = $capsule;
     }
 
     public function testAbout()
@@ -42,7 +44,7 @@ class MigrationTest extends PHPUnit_Framework_TestCase
 
     public function testInit()
     {
-        $container['db'] = $this->connect();
+        $container['db'] = $this->db;
 
         $tester = new Tester();
         $tester->command(new Init($container), 'migrate:init');
@@ -51,7 +53,7 @@ class MigrationTest extends PHPUnit_Framework_TestCase
 
     public function testReset()
     {
-        $container['db'] = $this->connect();
+        $container['db'] = $this->db;
 
         $tester = new Tester();
         $tester->command(new Reset($container), 'migrate:reset', 'Y\n');
@@ -62,7 +64,7 @@ class MigrationTest extends PHPUnit_Framework_TestCase
 
     public function testStatus()
     {
-        $container['db'] = $this->connect();
+        $container['db'] = $this->db;
 
         $tester = new Tester();
         $tester->command(new Status($container), 'migrate:status');
@@ -72,7 +74,7 @@ class MigrationTest extends PHPUnit_Framework_TestCase
 
     public function testUp()
     {
-        $container['db'] = $this->connect();
+        $container['db'] = $this->db;
 
         $tester = new Tester();
         $tester->command(new Up($container), 'migrate:up');
@@ -82,7 +84,7 @@ class MigrationTest extends PHPUnit_Framework_TestCase
 
     public function testListing()
     {
-        $container['db'] = $this->connect();
+        $container['db'] = $this->db;
 
         $tester = new Tester();
         $tester->command(new Listing($container), 'migrate:list');
@@ -92,7 +94,7 @@ class MigrationTest extends PHPUnit_Framework_TestCase
 
     public function testDown()
     {
-        $container['db'] = $this->connect();
+        $container['db'] = $this->db;
 
         $tester = new Tester();
         $tester->command(new Down($container), 'migrate:down', 'Y\n');
@@ -101,7 +103,7 @@ class MigrationTest extends PHPUnit_Framework_TestCase
     }
     public function testDrop()
     {
-        $container['db'] = $this->connect();
+        $container['db'] = $this->db;
 
         $tester = new Tester();
         $tester->command(new Drop($container), 'migrate:drop', 'Y\n');

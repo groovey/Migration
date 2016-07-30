@@ -10,8 +10,6 @@ use Groovey\Migration\Commands\Up;
 use Groovey\Migration\Commands\Down;
 use Groovey\Migration\Commands\Drop;
 
-// use Groovey\Migration\Commands\Create;
-
 class MigrationTest extends PHPUnit_Framework_TestCase
 {
     public function connect()

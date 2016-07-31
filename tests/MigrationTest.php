@@ -21,7 +21,7 @@ class MigrationTest extends PHPUnit_Framework_TestCase
         $capsule->addConnection([
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'test',
+            'database'  => 'test_migration',
             'username'  => 'root',
             'password'  => '',
             'charset'   => 'utf8',
@@ -69,7 +69,7 @@ class MigrationTest extends PHPUnit_Framework_TestCase
         $tester = new Tester();
         $tester->command(new Status($container), 'migrate:status');
         $this->assertRegExp('/Unmigrated SQL/', $tester->getDisplay());
-        $this->assertRegExp('/001_users.yml/', $tester->getDisplay());
+        $this->assertRegExp('/001_create_users.yml/', $tester->getDisplay());
     }
 
     public function testUp()

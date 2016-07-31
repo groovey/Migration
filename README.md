@@ -102,10 +102,11 @@ For more information about YML files please visit: http://www.yaml.org/start.htm
 Sample .yml file:
 
 ```yml
-# Author: Name <your@email.com>
+date: '2016-06-26 17:27:05'
+author: Groovey
+description: User information
 
-# Run the migration
-UP: >
+up: >
 
     SELECT 1;
 
@@ -117,7 +118,7 @@ UP: >
 
 
 # Reverse the migration
-DOWN: >
+down: >
 
     DROP TABLE test;
 ```
@@ -130,11 +131,11 @@ Running this command will check all the unmigrated yaml files.
 
 Sample output:
 
-```html
+```text
 +-----------------------------+
 | Unmigrated SQL              |
 +-----------------------------+
-| 001_create_a_test_table.yml |
+| 001_create_test.yml |
 +-----------------------------+
 ```
 
@@ -147,7 +148,7 @@ Runs the migration `UP` script.
 
 Sample output:
 
-    Running migration file (001_create_a_test_table.yml).
+    Running migration file (001_create_test.yml).
 
 ## List
 
@@ -159,11 +160,11 @@ Shows all the migrated yml scripts.
 Sample output:
 
 ```text
-+----+---------+---------------------+---------------------+
-| id | Version | Description         | Created At          |
-+----+---------+---------------------+---------------------+
-| 1  | 001     | create a test table | 2014-11-12 16:07:16 |
-+----+---------+---------------------+---------------------+
++----+---------+---------+------------------+---------------------+---------------------+
+| Id | Version | Author  | Description      | Created At          | Updated At          |
++----+---------+---------+------------------+---------------------+---------------------+
+| 1  | 001     | Groovey | User information | 2016-06-26 17:27:05 | 2016-07-31 20:20:32 |
++----+---------+---------+------------------+---------------------+---------------------+
 ```
 
 
@@ -179,7 +180,7 @@ Reverse a specific migration version.
 
 Sample output:
 
-    Downgrading migration file (001_create_a_test_table.yml).
+    Downgrading migration file (001_create_test.yml).
 
 
 ## Reset
@@ -210,32 +211,3 @@ Sample output:
 Shows the library information details.
 
     $ groovey migrate:about
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -36,14 +36,16 @@ class Listing extends Command
             $datas[] = [
                 'id'          => $migration->id,
                 'version'     => $migration->version,
+                'author'      => $migration->author,
                 'description' => $migration->description,
                 'created at'  => $migration->created_at,
+                'updated at'  => $migration->updated_at,
             ];
         }
 
         $table = new Table($output);
         $table
-            ->setHeaders(['Id', 'Version', 'Description', 'Created At'])
+            ->setHeaders(['Id', 'Version', 'Author', 'Description', 'Created At', 'Updated At'])
             ->setRows($datas);
 
         $table->render();

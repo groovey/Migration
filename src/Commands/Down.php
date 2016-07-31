@@ -69,15 +69,13 @@ class Down extends Command
         foreach ($records as $record) {
             $id          = $record->id;
             $version     = $record->version;
-            $description = $record->description;
+            $filename        = $record->filename;
 
-            $file = $version.'_'.str_replace(' ', '_', $description).'.yml';
+            $output->writeln("<info>Downgrading migration file ($filename).</info>");
 
-            $output->writeln("<info>Downgrading migration file ($file).</info>");
+            $value = $yaml->parse(file_get_contents($dir.'/'.$filename));
 
-            $value = $yaml->parse(file_get_contents($dir.'/'.$file));
-
-            $down  = explode(';', trim($value['DOWN']));
+            $down  = explode(';', trim($value['down']));
             $down  = array_filter($down);
 
             foreach ($down as $query) {

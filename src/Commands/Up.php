@@ -37,10 +37,24 @@ class Up extends Command
         foreach (Migration::getUnMigratedFiles($app) as $file) {
             $output->writeln("<info>Running migration file ($file).</info>");
 
-            $value = $yaml->parse(file_get_contents($dir.'/'.$file));
+            $content     = $yaml->parse(file_get_contents($dir.'/'.$file));
+            $up          = explode(';', trim($content['up']));
+            $up          = array_filter($up);
+            $date        = element('date', $content);
+            $author      = element('author', $content);
+            $description = element('description', $content);
+            $valid       = validate_date($date);
 
-            $up = explode(';', trim($value['UP']));
-            $up = array_filter($up);
+            if (!$valid) {
+                $output->writeln('<error>Invalid date (YY-mm-dd HH:mm:ss).</error>');
+                exit();
+            } elseif (!$author) {
+                $output->writeln('<error>Invalid author.</error>');
+                exit();
+            } elseif (!$description) {
+                $output->writeln('<error>Invalid description.</error>');
+                exit();
+            }
 
             foreach ($up as $query) {
                 $app['db']::statement(trim($query));
@@ -49,9 +63,12 @@ class Up extends Command
             $info = Migration::getFileInfo($file);
 
             $app['db']->table('migrations')->insert([
+                    'filename'    => $file,
                     'version'     => $info['version'],
-                    'description' => $info['description'],
-                    'created_at'  => new \DateTime(),
+                    'author'      => $author,
+                    'description' => $description,
+                    'created_at'  => $date,
+                    'updated_at'  => new \DateTime(),
                 ]);
 
             $files[] = [$file];

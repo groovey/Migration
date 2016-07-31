@@ -77,12 +77,11 @@ YML;
     public static function getFileInfo($file)
     {
         list($version) = explode('_', $file);
-
-        $description = str_replace('_', ' ', substr($file, 4, -4));
+        $basename      = str_replace('_', ' ', substr($file, 4, -4));
 
         return [
-            'version'     => $version,
-            'description' => $description,
+            'version'  => $version,
+            'basename' => $basename,
         ];
     }
 

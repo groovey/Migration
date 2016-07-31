@@ -14,7 +14,8 @@
         "illuminate/events": "~5.2",
         "symfony/console": "~3.0",
         "symfony/finder": "~3.0",
-        "symfony/yaml"  : "~3.0"
+        "symfony/yaml"  : "~3.0",
+        "groovey/support" : "dev-master"
     },
     "autoload": {
         "psr-4": {

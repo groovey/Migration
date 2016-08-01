@@ -11,7 +11,7 @@ up: >
     `email` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
     `created_at` datetime NOT NULL,
     `modified_at` datetime NOT NULL
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
     ALTER TABLE `users` ADD KEY `id` (`id`);
 

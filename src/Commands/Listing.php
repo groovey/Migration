@@ -37,13 +37,14 @@ class Listing extends Command
                 'id'          => $migration->id,
                 'version'     => $migration->version,
                 'author'      => $migration->author,
-                'description' => $migration->description,
-                'created at'  => $migration->created_at,
-                'updated at'  => $migration->updated_at,
+                'description' => wordwrap($migration->description, 30),
+                'created at'  => substr($migration->created_at, 0, 10),
+                'updated at'  => substr($migration->updated_at, 0, 10),
             ];
         }
 
         $table = new Table($output);
+        $table->setColumnWidths(array(3, 5, 10, 30));
         $table
             ->setHeaders(['Id', 'Version', 'Author', 'Description', 'Created At', 'Updated At'])
             ->setRows($datas);

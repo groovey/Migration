@@ -135,7 +135,7 @@ Sample output:
 +-----------------------------+
 | Unmigrated SQL              |
 +-----------------------------+
-| 001_create_test.yml |
+| 001_create_test.yml         |
 +-----------------------------+
 ```
 
@@ -156,17 +156,15 @@ Shows all the migrated yml scripts.
 
     $ groovey migrate:list
 
-
 Sample output:
 
 ```text
-+----+---------+---------+------------------+---------------------+---------------------+
-| Id | Version | Author  | Description      | Created At          | Updated At          |
-+----+---------+---------+------------------+---------------------+---------------------+
-| 1  | 001     | Groovey | User information | 2016-06-26 17:27:05 | 2016-07-31 20:20:32 |
-+----+---------+---------+------------------+---------------------+---------------------+
++----+---------+---------+------------------+--------------+------------+
+| Id | Version | Author  | Description      | Created At   | Updated At |
++----+---------+---------+------------------+--------------+------------+
+| 1  | 001     | Groovey | User information | 2016-06-26 1 | 2016-07-31 |
++----+---------+---------+------------------+--------------+------------+
 ```
-
 
 ## Down
 
@@ -181,7 +179,6 @@ Reverse a specific migration version.
 Sample output:
 
     Downgrading migration file (001_create_test.yml).
-
 
 ## Reset
 
@@ -204,7 +201,6 @@ Sample output:
 
     Migration table will be drop, are you sure you want to proceed? (Y/N): Y
     Migrations table gone.
-
 
 ## About
 

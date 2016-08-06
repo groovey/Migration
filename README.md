@@ -31,7 +31,7 @@ $capsule = new Capsule();
 $capsule->addConnection([
     'driver'    => 'mysql',
     'host'      => 'localhost',
-    'database'  => 'test',
+    'database'  => 'test_migration',
     'username'  => 'root',
     'password'  => '',
     'charset'   => 'utf8',

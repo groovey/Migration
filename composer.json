@@ -2,7 +2,7 @@
     "name": "groovey/migration",
     "description": "Groovey Migration Package",
     "license": "MIT",
-    "keywords": ["silex"],
+    "keywords": ["silex", "groovey"],
     "authors": [
         {
             "name": "Harold Kim Cantil",

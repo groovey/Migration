@@ -27,7 +27,7 @@ class Down extends Command
             ->setName('migrate:down')
             ->setDescription('Reverese the migration.')
             ->addArgument(
-                'param',
+                'version',
                 InputArgument::OPTIONAL,
                 'Version number to rollback'
             )
@@ -36,11 +36,11 @@ class Down extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $app    = $this->app;
-        $dir    = Migration::getDirectory();
-        $yaml   = new Parser();
-        $param  = $input->getArgument('param');
-        $helper = $this->getHelper('question');
+        $app     = $this->app;
+        $dir     = Migration::getDirectory();
+        $yaml    = new Parser();
+        $version = $input->getArgument('version');
+        $helper  = $this->getHelper('question');
 
         $question = new ConfirmationQuestion(
             '<question>Are you sure you want to proceed? (y/N):</question> ',
@@ -50,8 +50,8 @@ class Down extends Command
             return;
         }
 
-        if ($param) {
-            $record = $app['db']->table('migrations')->where('version', '=', $param)->first();
+        if ($version) {
+            $record = $app['db']->table('migrations')->where('version', '=', $version)->first();
 
             if (!$record) {
                 $output->writeln('<error>Unable to find migration version.</error>');

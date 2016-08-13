@@ -33,7 +33,7 @@ class About extends Command
                                  /____/
  </comment>
 
- Project Name: Groovey Migration
+ Package Name: Groovey Migration
  Git: https://github.com/groovey/migration
  Author: Harold Kim Cantil <pokoot@gmail.com>
 

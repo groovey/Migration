@@ -85,26 +85,18 @@ Setup your migration directory relative to your root folder `./database/migratio
 
 Automatically create the yaml file.
 
-    $ groovey migrate:create create_test
+    $ groovey migrate:create 001
 
-The command will generate the formatted file like `001_create_test.yml`.
+The command will generate a formatted file like `001.yml`.
 
 ## The YML file
 
-This is where you store all your SQL scripts.
-
-`NOTE: Tabs needs to be converted to spaces. This is the rule for YML files.`
-
-For more information about YML files please visit: http://www.yaml.org/start.html
-
-`NOTE: All sql statement has to end with a semicolon (;)`
-
-Sample .yml file:
+Sample 001.yml file:
 
 ```yml
-date: '2016-06-26 17:27:05'
+date: 'YYYY-mm-dd HH:mm:ss'
 author: Groovey
-description: User information
+changelog: >
 
 up: >
 
@@ -116,8 +108,6 @@ up: >
       `created_at` int(11) NOT NULL
     ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
-# Reverse the migration
 down: >
 
     DROP TABLE test;
@@ -132,23 +122,23 @@ Running this command will check all the unmigrated yaml files.
 Sample output:
 
 ```text
-+-----------------------------+
-| Unmigrated SQL              |
-+-----------------------------+
-| 001_create_test.yml         |
-+-----------------------------+
++----------------+
+| Unmigrated YML |
++----------------+
+| 001.yml        |
++----------------+
 ```
 
 ## Up
 
-Runs the migration `UP` script.
+Runs the migration `up` script.
 
     $ groovey migrate:up
 
 
 Sample output:
 
-    Running migration file (001_create_test.yml).
+    Running migration file (001.yml).
 
 ## List
 
@@ -159,16 +149,17 @@ Shows all the migrated yml scripts.
 Sample output:
 
 ```text
-+----+---------+---------+------------------+--------------+------------+
-| Id | Version | Author  | Description      | Created At   | Updated At |
-+----+---------+---------+------------------+--------------+------------+
-| 1  | 001     | Groovey | User information | 2016-06-26 1 | 2016-07-31 |
-+----+---------+---------+------------------+--------------+------------+
++---------+------------+------------------------------------------+------------+------------+
+| Version | Author     | Changelog                                | Created At | Updated At |
++---------+------------+------------------------------------------+------------+------------+
+| 001     | Groovey    | User information.                        | 2016-06-26 | 2016-08-14 |
+| 002     | Pokoot     | Sample select.                           | 2016-08-14 | 2016-08-14 |
++---------+------------+------------------------------------------+------------+------------+
 ```
 
 ## Down
 
-Reverse the last migration.
+Revert to the last migration.
 
     $ groovey migrate:down
 
@@ -178,7 +169,7 @@ Reverse a specific migration version.
 
 Sample output:
 
-    Downgrading migration file (001_create_test.yml).
+    Downgrading migration file (001.yml).
 
 ## Reset
 

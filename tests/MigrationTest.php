@@ -76,8 +76,9 @@ class MigrationTest extends PHPUnit_Framework_TestCase
     {
         $app = $this->app;
         $display = $app['tester']->command('migrate:status')->execute()->display();
-        $this->assertRegExp('/Unmigrated SQL/', $display);
-        $this->assertRegExp('/001_create_users.yml/', $display);
+        $this->assertRegExp('/Unmigrated YML/', $display);
+        $this->assertRegExp('/001.yml/', $display);
+        $this->assertRegExp('/002.yml/', $display);
     }
 
     public function testUp()
@@ -91,14 +92,14 @@ class MigrationTest extends PHPUnit_Framework_TestCase
     {
         $app = $this->app;
         $display = $app['tester']->command('migrate:list')->execute()->display();
-        $this->assertRegExp('/Id | Version/', $display);
-        $this->assertRegExp('/1  | 001/', $display);
+        $this->assertRegExp('/Version/', $display);
+        $this->assertRegExp('/001/', $display);
     }
 
     public function testDown()
     {
         $app = $this->app;
-        $display = $app['tester']->command('migrate:down')->input('Y\n')->execute()->display();
+        $display = $app['tester']->command('migrate:down')->input('Y\n')->execute(['version' => '001'])->display();
         $this->assertRegExp('/Downgrading migration file/', $display);
     }
 

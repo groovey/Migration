@@ -34,19 +34,18 @@ class Listing extends Command
 
         foreach ($migrations as $migration) {
             $datas[] = [
-                'id'          => $migration->id,
-                'version'     => $migration->version,
-                'author'      => $migration->author,
-                'description' => wordwrap($migration->description, 30),
-                'created at'  => substr($migration->created_at, 0, 10),
-                'updated at'  => substr($migration->updated_at, 0, 10),
+                'version'    => $migration->version,
+                'author'     => $migration->author,
+                'changelog'  => wordwrap($migration->changelog, 40),
+                'created at' => substr($migration->created_at, 0, 10),
+                'updated at' => substr($migration->updated_at, 0, 10),
             ];
         }
 
         $table = new Table($output);
-        $table->setColumnWidths(array(3, 5, 10, 30));
+        $table->setColumnWidths(array(5, 10, 40));
         $table
-            ->setHeaders(['Id', 'Version', 'Author', 'Description', 'Created At', 'Updated At'])
+            ->setHeaders(['Version', 'Author', 'Changelog', 'Created At', 'Updated At'])
             ->setRows($datas);
 
         $table->render();

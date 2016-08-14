@@ -1,0 +1,11 @@
+date: '2016-08-14 00:00:00'
+author: Pokoot
+changelog: Sample select.
+
+up: >
+
+    SELECT 1;
+
+down: >
+
+    SELECT 1;

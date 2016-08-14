@@ -25,33 +25,28 @@ class Create extends Command
             ->setName('migrate:create')
             ->setDescription('Creates a .yml migration file.')
             ->addArgument(
-                'param',
-                InputArgument::IS_ARRAY | InputArgument::REQUIRED,
-                'The migration task description.'
+                'version',
+                InputArgument::REQUIRED,
+                'The migration file.'
             )
         ;
     }
 
-    private function getArguments(InputInterface $input)
-    {
-        $argument = '';
-
-        if ($names = $input->getArgument('param')) {
-            $argument .= implode('_', $names);
-        }
-
-        return trim($argument);
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $version   = $input->getArgument('version');
         $directory = Migration::getDirectory();
-        $filename  = Migration::getGeneratedFilename($this->getArguments($input));
         $data      = Migration::getTemplate();
+        $filename  = $version.'.yml';
+
+        if (file_exists($directory.'/'.$filename)) {
+            $output->writeln("<error>The migration file already $filename exists.</error>");
+            exit();
+        }
 
         file_put_contents($directory.'/'.$filename, $data);
 
-        $text = '<info>Sucessfully created migration a file.</info>';
+        $text = "<info>Sucessfully created migration ($filename).</info>";
         $output->writeln($text);
     }
 }

@@ -20,7 +20,7 @@ class Init extends Command
     {
         $this
             ->setName('migrate:init')
-            ->setDescription('Setup your directory and creates a migration database table.')
+            ->setDescription('Setup the migrations directory and database.')
         ;
     }
 
@@ -33,8 +33,7 @@ class Init extends Command
                   `id` int(11) NOT NULL AUTO_INCREMENT,
                   `version` char(3) COLLATE utf8_unicode_ci NOT NULL,
                   `author` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-                  `description` text COLLATE utf8_unicode_ci NOT NULL,
-                  `filename` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+                  `changelog` text COLLATE utf8_unicode_ci NOT NULL,
                   `created_at` datetime NOT NULL,
                   `updated_at` datetime NOT NULL,
                   PRIMARY KEY (`id`)
@@ -60,7 +59,7 @@ class Init extends Command
             $output->writeln("<comment>Place all your migration files in ($folder).</comment>");
         }
 
-        $text = '<info>Sucessfully created migrations database.</info>';
+        $text = '<info>Sucessfully created migrations database folder.</info>';
 
         $output->writeln($text);
     }

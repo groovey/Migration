@@ -36,7 +36,7 @@ class Status extends Command
 
         $table = new Table($output);
         $table
-            ->setHeaders(['Unmigrated SQL'])
+            ->setHeaders(['Unmigrated YML'])
             ->setRows($files)
         ;
         $table->render();

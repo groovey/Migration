@@ -36,19 +36,12 @@ class Down extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $app     = $this->app;
-        $dir     = Migration::getDirectory();
-        $yaml    = new Parser();
-        $version = $input->getArgument('version');
-        $helper  = $this->getHelper('question');
-
-        $question = new ConfirmationQuestion(
-            '<question>Are you sure you want to proceed? (y/N):</question> ',
-            false);
-
-        if (!$helper->ask($input, $output, $question)) {
-            return;
-        }
+        $app      = $this->app;
+        $dir      = Migration::getDirectory();
+        $yaml     = new Parser();
+        $version  = $input->getArgument('version');
+        $helper   = $this->getHelper('question');
+        $question = new ConfirmationQuestion('<question>Are you sure you want to proceed? (y/N):</question> ', false);
 
         if ($version) {
             $record = $app['db']->table('migrations')->where('version', '=', $version)->first();
@@ -66,12 +59,27 @@ class Down extends Command
             $records = $app['db']->table('migrations')->orderBy('version', 'DESC')->take(1)->get();
         }
 
+        if (count($records) == 0) {
+            $output->writeln('<error>Nothing to downgrade.</error>');
+            exit();
+        }
+
+        $output->writeln('<info>Migration will downgrade to the following files:</info>');
+
+        foreach ($records as $record) {
+            $output->writeln("<info>- {$record->filename}</info>");
+        }
+
+        if (!$helper->ask($input, $output, $question)) {
+            return;
+        }
+
         foreach ($records as $record) {
             $id       = $record->id;
             $version  = $record->version;
-            $filename = $version.'.yml';
+            $filename = $record->filename;
 
-            $output->writeln("<info>Downgrading migration file ($filename).</info>");
+            $output->writeln("<info>- Downgrading ($filename).</info>");
 
             $value = $yaml->parse(file_get_contents($dir.'/'.$filename));
             $down  = explode(';', trim($value['down']));

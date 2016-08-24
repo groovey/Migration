@@ -6,6 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Groovey\Migration\Migration;
 
 class Create extends Command
@@ -25,19 +26,30 @@ class Create extends Command
             ->setName('migrate:create')
             ->setDescription('Creates a .yml migration file.')
             ->addArgument(
-                'version',
-                InputArgument::REQUIRED,
-                'The migration file.'
+                'description',
+                InputArgument::IS_ARRAY | InputArgument::REQUIRED,
+                'The migration task description.'
             )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $version   = $input->getArgument('version');
-        $directory = Migration::getDirectory();
-        $data      = Migration::getTemplate();
-        $filename  = $version.'.yml';
+        $app         = $this->app;
+        $description = $input->getArgument('description');
+        $directory   = Migration::getDirectory();
+        $data        = Migration::getTemplate();
+        $underscore  = implode('_', $description);
+        $version     = Migration::getNextVersion($app);
+        $filename    = $version.'_'.$underscore.'.yml';
+        $helper      = $this->getHelper('question');
+        $question    = new ConfirmationQuestion('<question>Are you sure you want to proceed? (Y/n):</question> ', false);
+
+        $output->writeln("<info>This will create a file ($filename)</info>");
+
+        if (!$helper->ask($input, $output, $question)) {
+            return;
+        }
 
         if (file_exists($directory.'/'.$filename)) {
             $output->writeln("<error>The migration file already $filename exists.</error>");

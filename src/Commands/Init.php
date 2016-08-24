@@ -33,6 +33,7 @@ class Init extends Command
                   `id` int(11) NOT NULL AUTO_INCREMENT,
                   `version` char(3) COLLATE utf8_unicode_ci NOT NULL,
                   `author` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+                  `filename` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                   `changelog` text COLLATE utf8_unicode_ci NOT NULL,
                   `created_at` datetime NOT NULL,
                   `updated_at` datetime NOT NULL,
@@ -56,11 +57,8 @@ class Init extends Command
         }
 
         if (file_exists($folder) && is_dir($folder)) {
+            $output->writeln('<info>Sucessfully created migrations database folder.</info>');
             $output->writeln("<comment>Place all your migration files in ($folder).</comment>");
         }
-
-        $text = '<info>Sucessfully created migrations database folder.</info>';
-
-        $output->writeln($text);
     }
 }

@@ -77,15 +77,16 @@ class MigrationTest extends PHPUnit_Framework_TestCase
         $app = $this->app;
         $display = $app['tester']->command('migrate:status')->execute()->display();
         $this->assertRegExp('/Unmigrated YML/', $display);
-        $this->assertRegExp('/001.yml/', $display);
-        $this->assertRegExp('/002.yml/', $display);
+        $this->assertRegExp('/001/', $display);
+        $this->assertRegExp('/002/', $display);
     }
 
     public function testUp()
     {
         $app = $this->app;
-        $display = $app['tester']->command('migrate:up')->execute()->display();
-        $this->assertRegExp('/Running migration file/', $display);
+        $display = $app['tester']->command('migrate:up')->input('Y\n')->execute()->display();
+        $this->assertRegExp('/001/', $display);
+        $this->assertRegExp('/002/', $display);
     }
 
     public function testListing()
@@ -94,13 +95,14 @@ class MigrationTest extends PHPUnit_Framework_TestCase
         $display = $app['tester']->command('migrate:list')->execute()->display();
         $this->assertRegExp('/Version/', $display);
         $this->assertRegExp('/001/', $display);
+        $this->assertRegExp('/002/', $display);
     }
 
     public function testDown()
     {
         $app = $this->app;
         $display = $app['tester']->command('migrate:down')->input('Y\n')->execute(['version' => '001'])->display();
-        $this->assertRegExp('/Downgrading migration file/', $display);
+        $this->assertRegExp('/Downgrading/', $display);
     }
 
     public function testDrop()

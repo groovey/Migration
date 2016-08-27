@@ -63,6 +63,7 @@ class Down extends Command
 
         if (count($records) == 0) {
             $output->writeln('<error>Nothing to downgrade.</error>');
+
             return;
         }
 

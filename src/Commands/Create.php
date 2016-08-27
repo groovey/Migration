@@ -56,6 +56,7 @@ class Create extends Command
 
         if (file_exists($directory.'/'.$filename)) {
             $output->writeln("<error>The migration file already $filename exists.</error>");
+
             return;
         }
 

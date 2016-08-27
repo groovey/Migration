@@ -3,7 +3,6 @@
 namespace Groovey\Migration;
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
 class Migration
 {

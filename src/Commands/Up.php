@@ -40,7 +40,7 @@ class Up extends Command
 
         if ($total == 0) {
             $output->writeln('<error>No new files to be migrated.</error>');
-            exit();
+            return;
         }
 
         $output->writeln('<highlight>Migration will run the following files:</highlight>');
@@ -69,16 +69,16 @@ class Up extends Command
 
             if (!$fileFormat) {
                 $output->writeln('<error>Invalid file format.</error>');
-                exit();
+                return;
             } elseif (!$dateFormat) {
                 $output->writeln('<error>Invalid date (YYYY-mm-dd HH:mm:ss).</error>');
-                exit();
+                return;
             } elseif (!$author) {
                 $output->writeln('<error>Invalid author.</error>');
-                exit();
+                return;
             } elseif (!$changelog) {
                 $output->writeln('<error>Invalid changelog.</error>');
-                exit();
+                return;
             }
 
             foreach ($up as $query) {

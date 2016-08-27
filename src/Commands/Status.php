@@ -38,7 +38,7 @@ class Status extends Command
 
         if (!$files) {
             $output->writeln('<highlight>Nothing to migrate.</highlight>');
-            exit();
+            return;
         }
 
         $table = new Table($output);

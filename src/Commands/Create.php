@@ -44,8 +44,10 @@ class Create extends Command
         $filename    = $version.'_'.$underscore.'.yml';
         $helper      = $this->getHelper('question');
         $question    = new ConfirmationQuestion('<question>Are you sure you want to proceed? (Y/n):</question> ', false);
+        $output      = Migration::outputFormatter($output);
 
-        $output->writeln("<info>This will create a file ($filename)</info>");
+        $output->writeln('<highlight>Creating migration file:</highlight>');
+        $output->writeln("<info> - $filename</info>");
 
         if (!$helper->ask($input, $output, $question)) {
             return;
@@ -58,7 +60,7 @@ class Create extends Command
 
         file_put_contents($directory.'/'.$filename, $data);
 
-        $text = "<info>Sucessfully created migration ($filename).</info>";
+        $text = '<info>Sucessfully created migration file.</info>';
         $output->writeln($text);
     }
 }

@@ -5,6 +5,7 @@ namespace Groovey\Migration\Commands;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Groovey\Migration\Migration;
 
 class Init extends Command
 {
@@ -48,6 +49,7 @@ class Init extends Command
     {
         $this->init();
 
+        $output = Migration::outputFormatter($output);
         $folder = getcwd().'/database/migrations';
 
         if (false === @mkdir($folder, 0755, true) && !file_exists($folder)) {
@@ -57,8 +59,9 @@ class Init extends Command
         }
 
         if (file_exists($folder) && is_dir($folder)) {
-            $output->writeln('<info>Sucessfully created migrations database folder.</info>');
-            $output->writeln("<comment>Place all your migration files in ($folder).</comment>");
+            $output->writeln('<highlight>Sucessfully created migrations database folder.</highlight>');
+            $output->writeln('<info>Place all your migration files in:');
+            $output->writeln("</info><comment>$folder</comment>");
         }
     }
 }

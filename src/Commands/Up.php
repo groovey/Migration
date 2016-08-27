@@ -34,6 +34,7 @@ class Up extends Command
         $yaml   = new Parser();
         $dir    = Migration::getDirectory();
         $files  = Migration::getUnMigratedFiles($app);
+        $output = Migration::outputFormatter($output);
         $total  = count($files);
         $helper = $this->getHelper('question');
         $list   = implode(',', $files);
@@ -43,7 +44,7 @@ class Up extends Command
             exit();
         }
 
-        $output->writeln('<info>Migration will run the following files:</info>');
+        $output->writeln('<highlight>Migration will run the following files:</highlight>');
 
         foreach ($files as $file) {
             $output->writeln("<info>- $file</info>");

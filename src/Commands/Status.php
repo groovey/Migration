@@ -29,9 +29,16 @@ class Status extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $output = Migration::outputFormatter($output);
+
         $files = [];
         foreach (Migration::getUnMigratedFiles($this->app) as $file) {
             $files[] = [$file];
+        }
+
+        if (!$files) {
+            $output->writeln('<highlight>Nothing to migrate.</highlight>');
+            exit();
         }
 
         $table = new Table($output);

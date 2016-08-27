@@ -38,6 +38,7 @@ class Down extends Command
     {
         $app      = $this->app;
         $dir      = Migration::getDirectory();
+        $output   = Migration::outputFormatter($output);
         $yaml     = new Parser();
         $version  = $input->getArgument('version');
         $helper   = $this->getHelper('question');
@@ -64,7 +65,7 @@ class Down extends Command
             exit();
         }
 
-        $output->writeln('<info>Migration will downgrade to the following files:</info>');
+        $output->writeln('<highlight>Migration will downgrade to the following files:</highlight>');
 
         foreach ($records as $record) {
             $output->writeln("<info>- {$record->filename}</info>");

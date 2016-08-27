@@ -3,6 +3,7 @@
 namespace Groovey\Migration;
 
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
 class Migration
 {
@@ -11,6 +12,17 @@ class Migration
     public function __construct($app)
     {
         $this->app = $app;
+    }
+
+    public static function outputFormatter($output)
+    {
+        $style = new OutputFormatterStyle('black', 'yellow');
+        $output->getFormatter()->setStyle('highlight', $style);
+
+        $style = new OutputFormatterStyle('black', 'red', ['blink']);
+        $output->getFormatter()->setStyle('warning', $style);
+
+        return $output;
     }
 
     public static function getTemplate()

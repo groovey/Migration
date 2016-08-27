@@ -6,6 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Groovey\Migration\Migration;
 
 class Reset extends Command
 {
@@ -29,6 +30,9 @@ class Reset extends Command
     {
         $app    = $this->app;
         $helper = $this->getHelper('question');
+        $output = Migration::outputFormatter($output);
+
+        $output->writeln('<warning>Warning!!!</warning>');
 
         $question = new ConfirmationQuestion(
             '<question>All migration entries will be cleared, are you sure you want to proceed? (y/N):</question> ',
@@ -40,7 +44,7 @@ class Reset extends Command
 
         $app['db']->table('migrations')->truncate();
 
-        $text = '<info>All migration entries has been cleared.</info>';
+        $text = '<highlight>All migration entries has been cleared.</highlight>';
 
         $output->writeln($text);
     }

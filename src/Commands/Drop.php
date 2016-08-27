@@ -6,6 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Groovey\Migration\Migration;
 
 class Drop extends Command
 {
@@ -36,7 +37,10 @@ class Drop extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $output = Migration::outputFormatter($output);
         $helper = $this->getHelper('question');
+
+        $output->writeln('<warning>Warning!!!</warning>');
 
         $question = new ConfirmationQuestion(
             '<question>Migrations table will be deleted, are you sure you want to proceed? (y/N):</question> ',
@@ -48,7 +52,7 @@ class Drop extends Command
 
         $this->drop();
 
-        $text = '<info>Migrations table has been deleted.</info>';
+        $text = '<highlight>Migrations table has been deleted.</highlight>';
 
         $output->writeln($text);
     }

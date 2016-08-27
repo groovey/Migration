@@ -37,7 +37,6 @@ class Up extends Command
         $output = Migration::outputFormatter($output);
         $total  = count($files);
         $helper = $this->getHelper('question');
-        $list   = implode(',', $files);
 
         if ($total == 0) {
             $output->writeln('<error>No new files to be migrated.</error>');
@@ -57,7 +56,7 @@ class Up extends Command
         }
 
         foreach ($files as $file) {
-            $output->writeln("<info>- Migrating ($file).</info>");
+            $output->writeln("<info>- Migrating ($file)</info>");
 
             $content    = $yaml->parse(file_get_contents($dir.'/'.$file));
             $up         = explode(';', trim($content['up']));

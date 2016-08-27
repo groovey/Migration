@@ -80,7 +80,7 @@ class Down extends Command
             $version  = $record->version;
             $filename = $record->filename;
 
-            $output->writeln("<info>- Downgrading ($filename).</info>");
+            $output->writeln("<info>- Downgrading ($filename)</info>");
 
             $value = $yaml->parse(file_get_contents($dir.'/'.$filename));
             $down  = explode(';', trim($value['down']));

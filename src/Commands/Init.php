@@ -60,8 +60,8 @@ class Init extends Command
 
         if (file_exists($folder) && is_dir($folder)) {
             $output->writeln('<highlight>Sucessfully created migrations database folder.</highlight>');
-            $output->writeln('<info>Place all your migration files in:');
-            $output->writeln("</info><comment>$folder</comment>");
+            $output->writeln('<info>Place all your migration files in:</info>');
+            $output->writeln("<comment>$folder</comment>");
         }
     }
 }

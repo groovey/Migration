@@ -100,13 +100,13 @@ YML;
 
     public static function getMigratedFiles($app)
     {
-        $version    = [];
-        $migrations = $app['db']->table('migrations')->orderBy('version')->get();
-        foreach ($migrations as $file) {
-            $version[] = $file->filename;
+        $files = [];
+        $datas = $app['db']->table('migrations')->orderBy('version')->get();
+        foreach ($datas as $data) {
+            $files[] = $data->filename;
         }
 
-        return $version;
+        return $files;
     }
 
     public static function getNextVersion($app)

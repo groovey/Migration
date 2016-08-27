@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Groovey\Migration\Migration;
+use Groovey\Support\Output;
 
 class Create extends Command
 {
@@ -44,7 +45,7 @@ class Create extends Command
         $filename    = $version.'_'.$underscore.'.yml';
         $helper      = $this->getHelper('question');
         $question    = new ConfirmationQuestion('<question>Are you sure you want to proceed? (Y/n):</question> ', false);
-        $output      = Migration::outputFormatter($output);
+        $output      = Output::style($output);
 
         $output->writeln('<highlight>Creating migration file:</highlight>');
         $output->writeln("<info> - $filename</info>");

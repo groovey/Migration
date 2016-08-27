@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
 use Groovey\Migration\Migration;
+use Groovey\Support\Output;
 
 class Status extends Command
 {
@@ -29,7 +30,7 @@ class Status extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output = Migration::outputFormatter($output);
+        $output = Output::style($output);
 
         $files = [];
         foreach (Migration::getUnMigratedFiles($this->app) as $file) {

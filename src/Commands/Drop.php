@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Groovey\Migration\Migration;
+use Groovey\Support\Output;
 
 class Drop extends Command
 {
@@ -37,7 +38,7 @@ class Drop extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output = Migration::outputFormatter($output);
+        $output = Output::style($output);
         $helper = $this->getHelper('question');
 
         $output->writeln('<warning>Warning!!!</warning>');

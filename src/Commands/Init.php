@@ -6,6 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Groovey\Migration\Migration;
+use Groovey\Support\Output;
 
 class Init extends Command
 {
@@ -49,7 +50,7 @@ class Init extends Command
     {
         $this->init();
 
-        $output = Migration::outputFormatter($output);
+        $output = Output::style($output);
         $folder = getcwd().'/database/migrations';
 
         if (false === @mkdir($folder, 0755, true) && !file_exists($folder)) {

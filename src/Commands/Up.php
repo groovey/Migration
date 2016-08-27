@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Yaml\Parser;
 use Groovey\Migration\Migration;
+use Groovey\Support\Output;
 
 class Up extends Command
 {
@@ -34,7 +35,7 @@ class Up extends Command
         $yaml   = new Parser();
         $dir    = Migration::getDirectory();
         $files  = Migration::getUnMigratedFiles($app);
-        $output = Migration::outputFormatter($output);
+        $output = Output::style($output);
         $total  = count($files);
         $helper = $this->getHelper('question');
 

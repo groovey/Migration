@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Yaml\Parser;
 use Groovey\Migration\Migration;
+use Groovey\Support\Output;
 
 class Down extends Command
 {
@@ -38,7 +39,7 @@ class Down extends Command
     {
         $app      = $this->app;
         $dir      = Migration::getDirectory();
-        $output   = Migration::outputFormatter($output);
+        $output   = Output::style($output);
         $yaml     = new Parser();
         $version  = $input->getArgument('version');
         $helper   = $this->getHelper('question');

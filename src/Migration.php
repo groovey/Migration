@@ -14,17 +14,6 @@ class Migration
         $this->app = $app;
     }
 
-    public static function outputFormatter($output)
-    {
-        $style = new OutputFormatterStyle('black', 'yellow');
-        $output->getFormatter()->setStyle('highlight', $style);
-
-        $style = new OutputFormatterStyle('black', 'red', ['blink']);
-        $output->getFormatter()->setStyle('warning', $style);
-
-        return $output;
-    }
-
     public static function getTemplate()
     {
         $now  = new \DateTime();

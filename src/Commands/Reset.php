@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Groovey\Migration\Migration;
+use Groovey\Support\Output;
 
 class Reset extends Command
 {
@@ -30,7 +31,7 @@ class Reset extends Command
     {
         $app    = $this->app;
         $helper = $this->getHelper('question');
-        $output = Migration::outputFormatter($output);
+        $output = Output::style($output);
 
         $output->writeln('<warning>Warning!!!</warning>');
 

@@ -36,7 +36,7 @@ class Listing extends Command
             $datas[] = [
                 'version'    => $migration->version,
                 'author'     => $migration->author,
-                'changelog'  => wordwrap($migration->changelog, 40),
+                'changelog'  => trim(wordwrap($migration->changelog, 40)),
                 'created at' => substr($migration->created_at, 0, 10),
                 'updated at' => substr($migration->updated_at, 0, 10),
             ];

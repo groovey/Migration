@@ -27,25 +27,28 @@ class Create extends Command
             ->setName('migrate:create')
             ->setDescription('Creates a .yml migration file.')
             ->addArgument(
-                'description',
-                InputArgument::IS_ARRAY | InputArgument::REQUIRED,
-                'The migration task description.'
-            )
+                'version',
+                InputArgument::REQUIRED,
+                'The version in {major.minor.build} format.')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $app         = $this->app;
-        $description = $input->getArgument('description');
-        $directory   = Migration::getDirectory();
-        $data        = Migration::getTemplate();
-        $underscore  = implode('_', $description);
-        $version     = Migration::getNextVersion($app);
-        $filename    = $version.'_'.$underscore.'.yml';
-        $helper      = $this->getHelper('question');
-        $question    = new ConfirmationQuestion('<question>Are you sure you want to proceed? (Y/n):</question> ', false);
-        $output      = Output::style($output);
+        $app       = $this->app;
+        $output    = Output::style($output);
+        $helper    = $this->getHelper('question');
+        $directory = Migration::getDirectory();
+        $data      = Migration::getTemplate();
+        $version   = $input->getArgument('version');
+        $filename  = $version.'.yml';
+        $question  = new ConfirmationQuestion('<question>Are you sure you want to proceed? (Y/n):</question> ', false);
+
+        if (!Migration::validateVersion($version)) {
+            $output->writeln('<error>Invalid version format (major.minor.build). </error>');
+
+            return;
+        }
 
         $output->writeln('<highlight>Creating migration file:</highlight>');
         $output->writeln("<info> - $filename</info>");
@@ -59,6 +62,8 @@ class Create extends Command
 
             return;
         }
+
+        die('test');
 
         file_put_contents($directory.'/'.$filename, $data);
 

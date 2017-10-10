@@ -33,11 +33,11 @@ class Up extends Command
     {
         $app    = $this->app;
         $yaml   = new Parser();
+        $output = Output::style($output);
+        $helper = $this->getHelper('question');
         $dir    = Migration::getDirectory();
         $files  = Migration::getUnMigratedFiles($app);
-        $output = Output::style($output);
         $total  = count($files);
-        $helper = $this->getHelper('question');
 
         if ($total == 0) {
             $output->writeln('<error>No new files to be migrated.</error>');
@@ -67,13 +67,8 @@ class Up extends Command
             $author     = element('author', $content);
             $changelog  = element('changelog', $content);
             $dateFormat = validate_date($date);
-            $fileFormat = Migration::validateFileFormat($file);
 
-            if (!$fileFormat) {
-                $output->writeln('<error>Invalid file format.</error>');
-
-                return;
-            } elseif (!$dateFormat) {
+            if (!$dateFormat) {
                 $output->writeln('<error>Invalid date (YYYY-mm-dd HH:mm:ss).</error>');
 
                 return;
@@ -93,8 +88,12 @@ class Up extends Command
 
             $info = Migration::getFileInfo($file);
 
+            $major = $info['major'];
+            $minor = $info['minor'];
+            $build = $info['build'];
+
             $app['db']->table('migrations')->insert([
-                    'version'    => $info['version'],
+                    'version'    => $major.'.'.$minor.'.'.$build,
                     'author'     => $author,
                     'filename'   => $file,
                     'changelog'  => $changelog,

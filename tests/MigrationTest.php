@@ -53,61 +53,61 @@ class MigrationTest extends PHPUnit_Framework_TestCase
 
     public function testAbout()
     {
-        $app = $this->app;
+        $app     = $this->app;
         $display = $app['tester']->command('migrate:about')->execute()->display();
         $this->assertRegExp('/Groovey/', $display);
     }
 
     public function testInit()
     {
-        $app = $this->app;
+        $app     = $this->app;
         $display = $app['tester']->command('migrate:init')->execute()->display();
         $this->assertRegExp('/Sucessfully/', $display);
     }
 
     public function testReset()
     {
-        $app = $this->app;
+        $app     = $this->app;
         $display = $app['tester']->command('migrate:reset')->input('Y\n')->execute()->display();
         $this->assertRegExp('/All migration entries has been cleared/', $display);
     }
 
     public function testStatus()
     {
-        $app = $this->app;
+        $app     = $this->app;
         $display = $app['tester']->command('migrate:status')->execute()->display();
         $this->assertRegExp('/Unmigrated YML/', $display);
-        $this->assertRegExp('/001/', $display);
-        $this->assertRegExp('/002/', $display);
+        $this->assertRegExp('/0.0.1.yml/', $display);
+        $this->assertRegExp('/0.0.2.yml/', $display);
     }
 
     public function testUp()
     {
-        $app = $this->app;
+        $app     = $this->app;
         $display = $app['tester']->command('migrate:up')->input('Y\n')->execute()->display();
-        $this->assertRegExp('/001/', $display);
-        $this->assertRegExp('/002/', $display);
+        $this->assertRegExp('/0.0.1.yml/', $display);
+        $this->assertRegExp('/0.0.2.yml/', $display);
     }
 
     public function testListing()
     {
-        $app = $this->app;
+        $app     = $this->app;
         $display = $app['tester']->command('migrate:list')->execute()->display();
         $this->assertRegExp('/Version/', $display);
-        $this->assertRegExp('/001/', $display);
-        $this->assertRegExp('/002/', $display);
+        $this->assertRegExp('/0.0.1/', $display);
+        $this->assertRegExp('/0.0.2/', $display);
     }
 
     public function testDown()
     {
-        $app = $this->app;
-        $display = $app['tester']->command('migrate:down')->input('Y\n')->execute(['version' => '001'])->display();
+        $app     = $this->app;
+        $display = $app['tester']->command('migrate:down')->input('Y\n')->execute(['version' => '0.0.1'])->display();
         $this->assertRegExp('/Downgrading/', $display);
     }
 
     public function testDrop()
     {
-        $app = $this->app;
+        $app     = $this->app;
         $display = $app['tester']->command('migrate:drop')->input('Y\n')->execute()->display();
         $this->assertRegExp('/Migrations table has been deleted/', $display);
     }

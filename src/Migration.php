@@ -45,29 +45,14 @@ YML;
         return $finder->files()->in(self::getDirectory());
     }
 
-    public static function validateFileFormat($file)
-    {
-        list($basename, $extension) = explode('.', $file);
-        $version     = substr($basename, 0, 3);
-        $description = substr($basename, 4);
-
-        if (preg_match('/[0-9][0-9][0-9]_/', $file, $output)) {
-            return true;
-        }
-
-        return false;
-    }
-
     public static function getFileInfo($file)
     {
-        list($basename, $extension) = explode('.', $file);
-        $version     = substr($basename, 0, 3);
-        $description = substr($basename, 4);
+        list($major, $minor, $build) = explode('.', $file);
 
         return [
-            'version'     => $version,
-            'description' => $description,
-            'extension'   => $extension,
+            'major' => $major,
+            'minor' => $minor,
+            'build' => $build,
         ];
     }
 
@@ -97,21 +82,14 @@ YML;
         return $files;
     }
 
-    public static function getNextVersion($app)
+    public static function validateVersion($version)
     {
-        $migratedFiles   = self::getMigratedFiles($app);
-        $unMigratedFiles = self::getUnMigratedFiles($app);
+        $total = substr_count($version, '.');
 
-        if (!$unMigratedFiles) {
-            $last = end($migratedFiles);
-        } else {
-            $last = end($unMigratedFiles);
+        if ($total == 2) {
+            return true;
         }
 
-        $lastVersion = substr($last, 0, 3);
-        $lastVersion += 1;
-        $nextVersion     = str_pad($lastVersion, 3, '0', STR_PAD_LEFT);
-
-        return $nextVersion;
+        return false;
     }
 }

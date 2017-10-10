@@ -33,7 +33,7 @@ class Init extends Command
         $query = '
                 CREATE TABLE IF NOT EXISTS `migrations` (
                   `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `version` char(3) COLLATE utf8_unicode_ci NOT NULL,
+                  `version` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
                   `author` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
                   `filename` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                   `changelog` text COLLATE utf8_unicode_ci NOT NULL,

@@ -35,7 +35,6 @@ class Init extends Command
                   `id` int(11) NOT NULL AUTO_INCREMENT,
                   `version` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
                   `author` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-                  `filename` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                   `changelog` text COLLATE utf8_unicode_ci NOT NULL,
                   `created_at` datetime NOT NULL,
                   `updated_at` datetime NOT NULL,

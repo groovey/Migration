@@ -70,7 +70,7 @@ class Down extends Command
         $output->writeln('<highlight>Migration will downgrade to the following files:</highlight>');
 
         foreach ($records as $record) {
-            $output->writeln("<info>- {$record->filename}</info>");
+            $output->writeln("<info>- {$record->version}.yml</info>");
         }
 
         if (!$helper->ask($input, $output, $question)) {
@@ -80,7 +80,7 @@ class Down extends Command
         foreach ($records as $record) {
             $id       = $record->id;
             $version  = $record->version;
-            $filename = $record->filename;
+            $filename = $version.'.yml';
 
             $output->writeln("<info>- Downgrading ($filename)</info>");
 

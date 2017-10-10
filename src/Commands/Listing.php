@@ -38,14 +38,13 @@ class Listing extends Command
                 'author'     => $migration->author,
                 'changelog'  => trim(wordwrap($migration->changelog, 40)),
                 'created at' => substr($migration->created_at, 0, 10),
-                'updated at' => substr($migration->updated_at, 0, 10),
             ];
         }
 
         $table = new Table($output);
-        $table->setColumnWidths(array(5, 10, 40));
+        $table->setColumnWidths(array(5, 10, 60));
         $table
-            ->setHeaders(['Version', 'Author', 'Changelog', 'Created At', 'Updated At'])
+            ->setHeaders(['Version', 'Author', 'Changelog', 'Created At'])
             ->setRows($datas);
 
         $table->render();

@@ -76,7 +76,7 @@ YML;
         $files = [];
         $datas = $app['db']->table('migrations')->orderBy('version')->get();
         foreach ($datas as $data) {
-            $files[] = $data->filename;
+            $files[] = $data->version.'.yml';
         }
 
         return $files;

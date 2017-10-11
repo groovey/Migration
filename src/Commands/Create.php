@@ -63,8 +63,6 @@ class Create extends Command
             return;
         }
 
-        die('test');
-
         file_put_contents($directory.'/'.$filename, $data);
 
         $text = '<info>Sucessfully created migration file.</info>';

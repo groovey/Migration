@@ -95,7 +95,7 @@ class Up extends Command
             $app['db']->table('migrations')->insert([
                     'version'    => $major.'.'.$minor.'.'.$build,
                     'author'     => $author,
-                    'changelog'  => $changelog,
+                    'changelog'  => trim($changelog),
                     'created_at' => $date,
                     'updated_at' => new \DateTime(),
                 ]);

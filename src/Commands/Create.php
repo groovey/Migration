@@ -25,7 +25,7 @@ class Create extends Command
     {
         $this
             ->setName('migrate:create')
-            ->setDescription('Creates a .yml migration file.')
+            ->setDescription('Creates a .yml migration file')
             ->addArgument(
                 'version',
                 InputArgument::REQUIRED,

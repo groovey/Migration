@@ -24,7 +24,7 @@ class Drop extends Command
     {
         $this
             ->setName('migrate:drop')
-            ->setDescription('[Caution] Drops the migration table.')
+            ->setDescription('[Caution] Drops the migration table')
         ;
     }
 

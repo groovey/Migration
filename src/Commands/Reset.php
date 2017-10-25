@@ -23,7 +23,7 @@ class Reset extends Command
     {
         $this
             ->setName('migrate:reset')
-            ->setDescription('Truncates all migrations data.')
+            ->setDescription('Truncates all migrations data')
         ;
     }
 

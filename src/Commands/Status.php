@@ -24,7 +24,7 @@ class Status extends Command
     {
         $this
             ->setName('migrate:status')
-            ->setDescription('List all the migrations file that have not been migrated.')
+            ->setDescription('List all the migrations file that have not been migrated')
         ;
     }
 

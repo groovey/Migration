@@ -25,7 +25,7 @@ class Up extends Command
     {
         $this
             ->setName('migrate:up')
-            ->setDescription('Runs the migration up script.')
+            ->setDescription('Runs the migration up script')
         ;
     }
 

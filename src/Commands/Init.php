@@ -22,7 +22,7 @@ class Init extends Command
     {
         $this
             ->setName('migrate:init')
-            ->setDescription('Setup the migrations directory and database.')
+            ->setDescription('Setup the migrations directory and database')
         ;
     }
 

@@ -21,7 +21,7 @@ class Listing extends Command
     {
         $this
             ->setName('migrate:list')
-            ->setDescription('Listing off all the migrated script.')
+            ->setDescription('Listing off all the migrated script')
         ;
     }
 

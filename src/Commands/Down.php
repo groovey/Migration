@@ -26,7 +26,7 @@ class Down extends Command
     {
         $this
             ->setName('migrate:down')
-            ->setDescription('Reverese the migration.')
+            ->setDescription('Reverese the migration')
             ->addArgument(
                 'version',
                 InputArgument::OPTIONAL,
